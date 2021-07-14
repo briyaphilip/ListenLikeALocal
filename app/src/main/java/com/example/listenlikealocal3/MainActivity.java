@@ -14,7 +14,7 @@ import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
 import com.spotify.sdk.android.auth.AuthorizationResponse;
 import com.spotify.sdk.android.auth.BuildConfig;
-import com.spotify.sdk.android.authentication.sample.R;
+import com.example.listenlikealocal3.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,8 +30,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String CLIENT_ID = "089d841ccc194c10a77afad9e1c11d54";
-    public static final String REDIRECT_URI = "spotify-sdk://auth";
+    public static final String CLIENT_ID = "12b41bf4bae9497bb882c55db18c0c0e";
+    public static final String REDIRECT_URI = "com.listenlikealocal://callback";
     public static final int AUTH_TOKEN_REQUEST_CODE = 0x10;
     public static final int AUTH_CODE_REQUEST_CODE = 0x11;
 
