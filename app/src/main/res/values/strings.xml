@@ -12,4 +12,8 @@
     <string name="btn_req_token">Request Token</string>
     <string name="btn_clear_credentials">Clear WebView Credentials</string>
 
+    <string name="name_txt">name</string>
+    <string name="name">Name Placeholder</string>
+    <string name="top_artist_txtView">Top Artists</string>
+
 </resources>
