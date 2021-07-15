@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.example.listenlikealocal3.Connectors.UserService;
+import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.User;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     //Authentication from Spotify API
     protected void LoginActivityAuthentication(){
         AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(CLIENT_ID, TOKEN, REDIRECT_URI);
-        builder.setScopes(new String[]{"streaming user-top-read"});
+        builder.setScopes(new String[]{"streaming user-top-read, user-read-recently-played,user-library-modify,user-read-email,user-read-private"});
         AuthorizationRequest request = builder.build();
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
@@ -92,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startMainActivity() {
-        Intent intent = new Intent(MainActivity.this, StreamActivity.class);
+        Intent intent = new Intent(MainActivity.this, PlaylistActivity.class);
         startActivity(intent);
     }
 }
