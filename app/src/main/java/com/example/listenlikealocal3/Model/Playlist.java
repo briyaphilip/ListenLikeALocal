@@ -1,7 +1,9 @@
 package com.example.listenlikealocal3.Model;
 
+import android.content.Context;
+
 public class Playlist {
-    //private String country;
+    private String country;
     private String name;
     private String id;
 
@@ -13,14 +15,24 @@ public class Playlist {
         this.name = name;
         this.id = id;
     }
-//
-//    public String getCountry() {
-//        return country;
-//    }
-//
-//    public void setCountry(String country) {
-//        this.country = country;
-//    }
+
+    public Playlist(String name, String id, String country){
+        this.name = name;
+        this.id = id;
+        this.country = country;
+    }
+
+    public Playlist(Context applicationContext) {
+    }
+
+    public String getCountry() {
+        country = "ES";
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 
     public String getName() {
         return name;

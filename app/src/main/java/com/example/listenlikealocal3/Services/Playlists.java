@@ -10,10 +10,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.listenlikealocal3.Connectors.AsyncHandler;
-import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +26,7 @@ public class Playlists {
     private SharedPreferences sp;
     private RequestQueue q;
 
+
     public Playlists(Context context){
         sp = context.getSharedPreferences("SPOTIFY", 0);
         q = Volley.newRequestQueue(context);
@@ -37,9 +36,11 @@ public class Playlists {
         return playlists;
     }
 
-    //make call to endpoint to recieve featured playlists
-    public ArrayList<Playlist> getFeaturedPlaylists(final AsyncHandler callback){
-        String url = "https://api.spotify.com/v1/browse/featured-playlists";
+
+    //make call to endpoint to receive featured playlists
+    public void getFeaturedPlaylists(final AsyncHandler callback, String country_code){
+
+        String url = "https://api.spotify.com/v1/browse/featured-playlists?country=" + "ES";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
             Gson gson = new Gson();
             JSONObject playlistObj = response.optJSONObject("playlists");
@@ -52,10 +53,15 @@ public class Playlists {
                         JSONObject obj = items.getJSONObject(i);
                         String id = obj.getString("id");
                         String name = obj.getString("name");
+                        //String country = obj.optString("country");
+
                         Log.d("PLAYLIST ID", id);
                         Log.d("PLAYLIST NAME", name);
+                        //Log.d("COUNTRY", country);
 
-                        //save artist to array list
+
+
+                        //save playlist to list
                         Playlist playlist = new Playlist(name, id);
                         playlists.add(playlist);
 
@@ -71,20 +77,26 @@ public class Playlists {
 
         }, error -> getFeaturedPlaylists(() -> {
 
-        })) {
+        }, country_code)) {
             @Override
             //need this override method to provide header to request
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap();
+                Map<String, String> headers = new HashMap<String, String>();
                 String token = sp.getString("token", "");
                 String auth = "Bearer " + token;
                 headers.put("Authorization", auth);
+                headers.put("country", country_code);
+                return headers;
+            }
+
+            public Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("country", "DK");
                 return headers;
             }
         };
 
         q.add(jsonObjectRequest);
-        return playlists;
 
     }
 }

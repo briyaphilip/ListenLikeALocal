@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startMainActivity() {
-        Intent intent = new Intent(MainActivity.this, PlaylistActivity.class);
+        Intent intent = new Intent(MainActivity.this, PlaylistDetailActivity.class);
         startActivity(intent);
     }
 }

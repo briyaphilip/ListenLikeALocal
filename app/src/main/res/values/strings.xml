@@ -16,5 +16,6 @@
     <string name="name">Name Placeholder</string>
     <string name="top_artist_txtView">Top Artists</string>
     <string name="ft_playlist_txtView">Featured Playlists</string>
+    <string name="song_txtView">Songs</string>
 
 </resources>

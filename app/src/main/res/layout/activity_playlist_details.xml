@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".PlaylistActivity">
+        tools:context=".PlaylistDetailActivity">
 
         <TextView
             android:id="@+id/name_txtView_name"
@@ -27,16 +27,16 @@
             app:layout_constraintVertical_bias="0.069" />
 
         <TextView
-            android:id="@+id/ftPlaylists"
+            android:id="@+id/Songs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ft_playlist_txtView"
+            android:text="@string/song_txtView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/name_txtView_name"
             app:layout_constraintVertical_bias="0.028"
-            android:onClick="onClick"/>
+            />
 
         <View
             android:id="@+id/divider"
@@ -52,7 +52,7 @@
             app:layout_constraintVertical_bias="0.175" />
 
         <ListView
-            android:id="@+id/Playlist_listview"
+            android:id="@+id/Song_listview"
             android:layout_width="388dp"
             android:layout_height="659dp"
             android:layout_marginStart="8dp"

@@ -3,8 +3,11 @@ package com.example.listenlikealocal3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -51,7 +54,7 @@ public class PlaylistActivity extends AppCompatActivity {
         playlists.getFeaturedPlaylists(() -> {
             playlistsList = playlists.getPlaylists();
             updateListView(playlistsList);
-        });
+        }, "ES");
     }
 
     private void updateListView(ArrayList<Playlist> p) {
@@ -65,6 +68,9 @@ public class PlaylistActivity extends AppCompatActivity {
             String name = playlistNameList.get(position);
 
         });
+
+
     }
+
 }
 

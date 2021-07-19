@@ -1,24 +1,26 @@
 package com.example.listenlikealocal3.Model;
 
+import com.example.listenlikealocal3.Services.Songs;
+
 //will eventually use this class to fetch song from each individual artist
 public class Song {
-    private String song;
+    private String name;
     private String id;
 
 
     public Song(){ }
 
-    public Song(String song, String id){
-        this.song = song;
+    public Song(String name, String id){
+        this.name = name;
         this.id = id;
     }
 
-    public String getSong() {
-        return song;
+    public String getName() {
+        return name;
     }
 
-    public void setSong(String song) {
-        this.song = song;
+    public void setName(String song) {
+        this.name = name;
     }
 
     public String getId() {
@@ -28,7 +30,6 @@ public class Song {
     public void setId(String id) {
         this.id = id;
     }
-
 
 
 }
