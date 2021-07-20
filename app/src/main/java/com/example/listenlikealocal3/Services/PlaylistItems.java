@@ -52,7 +52,7 @@ public class PlaylistItems {
 
     //make call to endpoint to recieve playlist data
     public ArrayList<Song> getPlaylistItems(final AsyncHandler callback, String playlist_id){
-        String url = "https://api.spotify.com/v1//users/playlists/"+playlist_id+"/tracks?market=ES";
+        String url = "https://api.spotify.com/v1/playlists/37i9dQZF1DX8TvdyVZSYFY/tracks?market=ES";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
             Gson gson = new Gson();
             //user = gson.fromJson(response.toString(), User.class);
