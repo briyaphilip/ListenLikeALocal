@@ -30,7 +30,6 @@ public class SongService {
         msharedPreferences = context.getSharedPreferences("SPOTIFY", 0);
         q = Volley.newRequestQueue(context);
     }
-
     public ArrayList<Song> getSongs() {
         return songs;
     }
@@ -71,3 +70,4 @@ public class SongService {
     }
 
 }
+

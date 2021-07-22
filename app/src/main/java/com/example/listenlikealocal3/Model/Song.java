@@ -6,6 +6,7 @@ import com.example.listenlikealocal3.Services.Songs;
 public class Song {
     private String name;
     private String id;
+    private String artist;
 
 
     public Song(){ }
@@ -29,6 +30,14 @@ public class Song {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getArtist() {
+        return this.artist;
+    }
+
+    public void setArtist(String artist) {
+        this.artist = artist;
     }
 
 

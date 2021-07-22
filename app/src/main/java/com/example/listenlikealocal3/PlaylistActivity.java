@@ -17,7 +17,7 @@ import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Services.Playlists;
 import com.example.listenlikealocal3.Services.Songs;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistsBinding;
-import com.example.listenlikealocal3.databinding.ActivityStreamBinding;
+
 
 import java.util.ArrayList;
 
@@ -34,7 +34,7 @@ public class PlaylistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_playlists);
         //data binding for easy access
         binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);

@@ -18,7 +18,7 @@ import com.spotify.sdk.android.auth.AuthorizationResponse;
 
 import static com.spotify.sdk.android.auth.AuthorizationResponse.Type.TOKEN;
 
-public class MainActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity {
 
     private SharedPreferences.Editor editor;
     private SharedPreferences msharedPreferences;
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void startMainActivity() {
-        Intent intent = new Intent(MainActivity.this, PlaylistDetailActivity.class);
+        Intent intent = new Intent(AuthenticationActivity.this, ArtistDetailActivity.class);
         startActivity(intent);
     }
 }
