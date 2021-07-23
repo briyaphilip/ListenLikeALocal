@@ -1,8 +1,12 @@
 package com.example.listenlikealocal3.Services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,14 +21,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Playlists {
+public class Playlists extends AppCompatActivity {
     private ArrayList<Playlist> playlists = new ArrayList<Playlist>();
     private SharedPreferences sp;
     private RequestQueue q;
+
 
 
     public Playlists(Context context){
@@ -38,9 +44,10 @@ public class Playlists {
 
 
     //make call to endpoint to receive featured playlists
-    public void getFeaturedPlaylists(final AsyncHandler callback, String country_code){
+    public void getFeaturedPlaylists(final AsyncHandler callback, String country_code, String limit){
 
-        String url = "https://api.spotify.com/v1/browse/featured-playlists?country=" + "ES";
+
+        String url = "https://api.spotify.com/v1/browse/featured-playlists?country=" + country_code + "&limit=" + limit;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
             Gson gson = new Gson();
             JSONObject playlistObj = response.optJSONObject("playlists");
@@ -77,7 +84,7 @@ public class Playlists {
 
         }, error -> getFeaturedPlaylists(() -> {
 
-        }, country_code)) {
+        }, country_code, limit)) {
             @Override
             //need this override method to provide header to request
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -86,14 +93,10 @@ public class Playlists {
                 String auth = "Bearer " + token;
                 headers.put("Authorization", auth);
                 headers.put("country", country_code);
+                headers.put("limit", limit);
                 return headers;
             }
 
-            public Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> headers = new HashMap<String, String>();
-                headers.put("country", "DK");
-                return headers;
-            }
         };
 
         q.add(jsonObjectRequest);

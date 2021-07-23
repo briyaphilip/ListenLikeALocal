@@ -2,6 +2,7 @@ package com.example.listenlikealocal3.Connectors;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -24,7 +25,6 @@ public class SongService {
     private ArrayList<Song> songs = new ArrayList<>();
     private SharedPreferences msharedPreferences;
     private RequestQueue q;
-    private User user;
 
     public SongService(Context context) {
         msharedPreferences = context.getSharedPreferences("SPOTIFY", 0);
@@ -35,16 +35,31 @@ public class SongService {
     }
 
     public ArrayList<Song> getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
+
         String endpoint = "https://api.spotify.com/v1/playlists/37i9dQZF1DX8TvdyVZSYFY/tracks?market=ES";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     Gson gson = new Gson();
-
                     JSONArray jsonArray = response.optJSONArray("items");
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {
                             JSONObject object = jsonArray.getJSONObject(n);
                             object = object.optJSONObject("track");
+                            Log.i("TAG", "TRACK: " + object.toString());
+
+                            JSONArray album = object.getJSONArray("artists");
+                            Log.i("TAG", "LIST: " + album.toString());
+
+                            for(int i = 0; i < album.length(); i++) {
+                                JSONObject info = album.getJSONObject(i);
+                                String name = info.getString("name");
+                                Log.i("TAG", "NAME: " + name);
+                            }
+
+
+
+
+
                             Song song = gson.fromJson(object.toString(), Song.class);
                             songs.add(song);
                         } catch (JSONException e) {

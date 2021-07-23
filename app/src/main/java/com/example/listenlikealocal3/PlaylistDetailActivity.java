@@ -3,20 +3,14 @@ package com.example.listenlikealocal3;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.RequestQueue;
 import com.example.listenlikealocal3.Connectors.SongService;
-import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
-import com.example.listenlikealocal3.Services.PlaylistItems;
-import com.example.listenlikealocal3.Services.Playlists;
-import com.example.listenlikealocal3.Services.Songs;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistDetailsBinding;
-import com.example.listenlikealocal3.databinding.ActivityPlaylistsBinding;
 
 import java.util.ArrayList;
 

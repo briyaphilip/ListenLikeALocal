@@ -3,19 +3,13 @@ package com.example.listenlikealocal3;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
-import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Services.Playlists;
-import com.example.listenlikealocal3.Services.Songs;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistsBinding;
 
 
@@ -35,13 +29,17 @@ public class PlaylistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
+
+        String country_code = getIntent().getStringExtra("country_code");
+        String limit = "20";
+
         //data binding for easy access
         binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
         String name = sp.getString("name", null);
         binding.nameTxtViewName.setText(name);
         playlists = new Playlists(getApplicationContext());
-        getPlaylistsForListView();
+        getPlaylistsForListView(country_code, limit);
 
         arrayAdapter = new ArrayAdapter<>(
                 this,
@@ -50,11 +48,11 @@ public class PlaylistActivity extends AppCompatActivity {
         );
     }
 
-    private void getPlaylistsForListView(){
+    private void getPlaylistsForListView(String country_code, String limit){
         playlists.getFeaturedPlaylists(() -> {
             playlistsList = playlists.getPlaylists();
             updateListView(playlistsList);
-        }, "ES");
+        }, country_code, limit);
     }
 
     private void updateListView(ArrayList<Playlist> p) {

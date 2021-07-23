@@ -1,7 +1,5 @@
 package com.example.listenlikealocal3.Model;
 
-import com.example.listenlikealocal3.Services.Songs;
-
 //will eventually use this class to fetch song from each individual artist
 public class Song {
     private String name;
