@@ -6,13 +6,18 @@ import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.example.listenlikealocal3.Connectors.SongService;
+import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistDetailsBinding;
 
+import org.parceler.Parcels;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlaylistDetailActivity extends AppCompatActivity {
     private ActivityPlaylistDetailsBinding binding;
@@ -24,17 +29,24 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     //array adapter for list view
     private ArrayAdapter arrayAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //data binding for easy access
         binding = DataBindingUtil.setContentView(PlaylistDetailActivity.this, R.layout.activity_playlist_details);
+
+        Playlist playlistObject = (Playlist) Parcels.unwrap(getIntent().getParcelableExtra("playlist"));
+
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
         String name = sp.getString("name", null);
         binding.playlistName.setText(name);
         playlistItems = new SongService(getApplicationContext());
-        getSongsForListView();
+        String playlist_id = "";
+        //playlist_id = sp.getString("id", "");
+        playlist_id = playlistObject.getId();
+        getSongsForListView(playlist_id);
 
         arrayAdapter = new ArrayAdapter<>(
                 this,
@@ -43,11 +55,11 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         );
     }
 
-    private void getSongsForListView(){
+    private void getSongsForListView(String playlist_id){
         playlistItems.getPlaylistItems(() -> {
             songsList = playlistItems.getSongs();
             updateListView(songsList);
-        }, "37i9dQZF1DX8TvdyVZSYFY");
+        }, playlist_id);
     }
 
     private void updateListView(ArrayList<Song> s) {

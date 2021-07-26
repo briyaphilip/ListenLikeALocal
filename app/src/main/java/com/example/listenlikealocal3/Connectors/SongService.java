@@ -10,7 +10,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.listenlikealocal3.Model.Song;
-import com.example.listenlikealocal3.Model.User;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -36,13 +35,14 @@ public class SongService {
 
     public ArrayList<Song> getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
 
-        String endpoint = "https://api.spotify.com/v1/playlists/37i9dQZF1DX8TvdyVZSYFY/tracks?market=ES";
+        String endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id +"/tracks?market=ES";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONArray("items");
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {
+                            Log.i("TAG", "PLAYLIST ID" + playlist_id);
                             JSONObject object = jsonArray.getJSONObject(n);
                             object = object.optJSONObject("track");
                             Log.i("TAG", "TRACK: " + object.toString());
@@ -55,10 +55,6 @@ public class SongService {
                                 String name = info.getString("name");
                                 Log.i("TAG", "NAME: " + name);
                             }
-
-
-
-
 
                             Song song = gson.fromJson(object.toString(), Song.class);
                             songs.add(song);

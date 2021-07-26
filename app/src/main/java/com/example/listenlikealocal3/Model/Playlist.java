@@ -2,6 +2,9 @@ package com.example.listenlikealocal3.Model;
 
 import android.content.Context;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Playlist {
     private String country;
     private String name;

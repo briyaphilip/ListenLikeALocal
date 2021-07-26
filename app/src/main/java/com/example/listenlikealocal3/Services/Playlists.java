@@ -58,19 +58,19 @@ public class Playlists extends AppCompatActivity {
                 for (int i = 0; i < items.length(); i++) {
                     try{
                         JSONObject obj = items.getJSONObject(i);
+
                         String id = obj.getString("id");
                         String name = obj.getString("name");
-                        //String country = obj.optString("country");
 
                         Log.d("PLAYLIST ID", id);
                         Log.d("PLAYLIST NAME", name);
-                        //Log.d("COUNTRY", country);
 
-
-
-                        //save playlist to list
                         Playlist playlist = new Playlist(name, id);
                         playlists.add(playlist);
+
+                        SharedPreferences.Editor myEdit = sp.edit();
+                        myEdit.putString("playlist_id", id);
+                        myEdit.apply();
 
                     } catch (JSONException e){ }
                 }
@@ -102,4 +102,5 @@ public class Playlists extends AppCompatActivity {
         q.add(jsonObjectRequest);
 
     }
+
 }
