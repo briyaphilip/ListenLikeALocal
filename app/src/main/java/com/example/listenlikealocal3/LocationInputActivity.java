@@ -9,7 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 public class LocationInputActivity extends AppCompatActivity {
 
@@ -46,8 +51,26 @@ public class LocationInputActivity extends AppCompatActivity {
             }
         });
 
+        queryLocation();
 
 
+
+    }
+
+    private void queryLocation() {
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> locations, ParseException e) {
+                if (e!=null) {
+                    Log.e("TAG", "issue getting locations", e);
+                    return;
+                }
+                for (Location location: locations) {
+                    Log.i("TAG", "Location: "+ location.getLocation());
+                }
+            }
+        });
     }
 
     public void onLogoutButton(View view) {
