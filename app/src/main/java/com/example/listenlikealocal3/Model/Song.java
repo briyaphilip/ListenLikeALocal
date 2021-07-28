@@ -9,9 +9,10 @@ public class Song {
 
     public Song(){ }
 
-    public Song(String name, String id){
+    public Song(String name, String id, String artist){
         this.name = name;
         this.id = id;
+        this.artist = artist;
     }
 
     public String getName() {

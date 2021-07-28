@@ -3,6 +3,7 @@ package com.example.listenlikealocal3;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -44,7 +45,6 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         binding.playlistName.setText(name);
         playlistItems = new SongService(getApplicationContext());
         String playlist_id = "";
-        //playlist_id = sp.getString("id", "");
         playlist_id = playlistObject.getId();
         getSongsForListView(playlist_id);
 
@@ -78,4 +78,6 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     }
 
 }
+
+
 

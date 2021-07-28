@@ -9,6 +9,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Song;
 import com.google.gson.Gson;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 
 public class SongService {
     private ArrayList<Song> songs = new ArrayList<>();
+    public ArrayList<Artist> artists = new ArrayList<>();
     private SharedPreferences msharedPreferences;
     private RequestQueue q;
 
@@ -31,6 +33,10 @@ public class SongService {
     }
     public ArrayList<Song> getSongs() {
         return songs;
+    }
+
+    public ArrayList<Artist> getArtist() {
+        return artists;
     }
 
     public ArrayList<Song> getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
@@ -52,9 +58,10 @@ public class SongService {
 
                             for(int i = 0; i < album.length(); i++) {
                                 JSONObject info = album.getJSONObject(i);
-                                String name = info.getString("name");
-                                Log.i("TAG", "NAME: " + name);
+                                String artistName = info.getString("name");
+                                Log.i("TAG", "NAME: " + artistName);
                             }
+
 
                             Song song = gson.fromJson(object.toString(), Song.class);
                             songs.add(song);

@@ -68,10 +68,6 @@ public class Playlists extends AppCompatActivity {
                         Playlist playlist = new Playlist(name, id);
                         playlists.add(playlist);
 
-                        SharedPreferences.Editor myEdit = sp.edit();
-                        myEdit.putString("playlist_id", id);
-                        myEdit.apply();
-
                     } catch (JSONException e){ }
                 }
                 callback.finished();

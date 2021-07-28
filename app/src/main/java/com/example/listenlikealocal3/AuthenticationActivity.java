@@ -93,7 +93,7 @@ public class AuthenticationActivity extends AppCompatActivity {
 
 
     private void startMainActivity() {
-        Intent intent = new Intent(AuthenticationActivity.this, LocationInputActivity.class);
+        Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
         startActivity(intent);
     }
 }
