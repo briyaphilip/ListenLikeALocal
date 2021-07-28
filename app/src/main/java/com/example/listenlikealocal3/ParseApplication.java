@@ -2,7 +2,7 @@ package com.example.listenlikealocal3;
 
 import android.app.Application;
 
-import com.example.listenlikealocal3.Model.Playlist;
+import com.example.listenlikealocal3.Model.Location;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
