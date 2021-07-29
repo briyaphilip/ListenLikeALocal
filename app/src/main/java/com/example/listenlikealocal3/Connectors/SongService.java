@@ -58,10 +58,11 @@ public class SongService {
 
                             for(int i = 0; i < album.length(); i++) {
                                 JSONObject info = album.getJSONObject(i);
-                                String artistName = info.getString("name");
-                                Log.i("TAG", "NAME: " + artistName);
+                                Artist artistNm = new Artist();
+                                artistNm.setName(info.getString("name"));
+                                artists.add(artistNm);
+                                Log.i("TAG","NAME: " + artistNm.toString());
                             }
-
 
                             Song song = gson.fromJson(object.toString(), Song.class);
                             songs.add(song);

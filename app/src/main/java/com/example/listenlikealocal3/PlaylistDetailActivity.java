@@ -2,6 +2,7 @@ package com.example.listenlikealocal3;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.RequestQueue;
 import com.example.listenlikealocal3.Connectors.SongService;
+import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistDetailsBinding;
@@ -19,11 +21,14 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 public class PlaylistDetailActivity extends AppCompatActivity {
     private ActivityPlaylistDetailsBinding binding;
     private ArrayList<Song> songsList = new ArrayList<>();
-    private ArrayList<String> songNameList = new ArrayList<>();;
+    private ArrayList<String> songNameList = new ArrayList<>();
+    private ArrayList<Artist> artistList = new ArrayList<>();
+    private ArrayList<String> artistNameList = new ArrayList<>();
     private SongService playlistItems;
     private RequestQueue q;
 
@@ -58,14 +63,20 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private void getSongsForListView(String playlist_id){
         playlistItems.getPlaylistItems(() -> {
             songsList = playlistItems.getSongs();
-            updateListView(songsList);
+            artistList = playlistItems.getArtist();
+            updateListView(songsList, artistList);
         }, playlist_id);
     }
 
-    private void updateListView(ArrayList<Song> s) {
+    private void updateListView(ArrayList<Song> s, ArrayList<Artist> a) {
         songsList = s;
-        for(Song song : s ){
-            songNameList.add(song.getName());
+        artistList = a;
+
+        for (int i = 0; i < songsList.size(); i++) {
+            Song song = songsList.get(i);
+            Artist artist = artistList.get(i);
+            Log.i("TAG", song.getName() + " by: " + artist.getName());
+            songNameList.add(song.getName() + " by: " + artist.getName());
         }
 
         binding.SongListview.setAdapter(arrayAdapter);

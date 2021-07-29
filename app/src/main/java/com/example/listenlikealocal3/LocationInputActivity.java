@@ -25,6 +25,7 @@ public class LocationInputActivity extends AppCompatActivity {
     EditText etlocation;
     String country_code;
     Button logoutBtn;
+    ParseException exception;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class LocationInputActivity extends AppCompatActivity {
                 return;
             }
             ParseUser currentUser = ParseUser.getCurrentUser();
-            saveLocation(locationInput, currentUser);
+            saveLocation(locationInput, currentUser, exception);
             Log.i("TAG", "onClick location input");
             country_code = etlocation.getText().toString();
 
@@ -55,17 +56,24 @@ public class LocationInputActivity extends AppCompatActivity {
 
     }
 
-    private void saveLocation(String locationInput, ParseUser currentUser) {
+    private void saveLocation(String locationInput, ParseUser currentUser, ParseException ex) {
         Location location = new Location();
         location.setLocation(locationInput);
         location.setUser(currentUser);
+
         location.saveInBackground(e -> {
             if (e != null) {
                 Log.e("TAG", "error while saving", e);
                 Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
+            if(ex != null) {
+                final int statusCode = ex.getCode();
+                if (statusCode == ParseException.OBJECT_NOT_FOUND) {
+
             Log.i("TAG", "Location save was successful!");
             etlocation.setText("");
+            }
+        }
         });
     }
 
