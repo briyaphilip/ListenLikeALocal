@@ -75,7 +75,6 @@ public class PlaylistActivity extends AppCompatActivity {
             Intent intent = new Intent(this, PlaylistDetailActivity.class);
             intent.putExtra("playlist", Parcels.wrap(p.get(position)));
             startActivity(intent);
-
         });
 
 

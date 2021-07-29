@@ -1,6 +1,9 @@
 package com.example.listenlikealocal3.Model;
 
-public class Artist {
+import org.parceler.Parcel;
+
+@Parcel
+public class Artist{
     private String name ;
     private String id;
 

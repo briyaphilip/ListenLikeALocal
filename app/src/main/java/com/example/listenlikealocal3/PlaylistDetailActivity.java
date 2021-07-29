@@ -1,10 +1,12 @@
 package com.example.listenlikealocal3;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -77,11 +79,17 @@ public class PlaylistDetailActivity extends AppCompatActivity {
             Artist artist = artistList.get(i);
             Log.i("TAG", song.getName() + " by: " + artist.getName());
             songNameList.add(song.getName() + " by: " + artist.getName());
+            artistNameList.add(artist.getName());
         }
 
         binding.SongListview.setAdapter(arrayAdapter);
         binding.SongListview.setOnItemClickListener((parent, view, position, id) -> {
             String name = songNameList.get(position);
+
+            Toast.makeText(this, "Clicked"+name, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, ArtistDetailActivity.class);
+            intent.putExtra("artist", Parcels.wrap(artistNameList.get(position)));
+            startActivity(intent);
 
         });
 
