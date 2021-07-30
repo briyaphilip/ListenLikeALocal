@@ -39,9 +39,9 @@ public class SongService {
         return artists;
     }
 
-    public ArrayList<Song> getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
+    public void getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
 
-        String endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id +"/tracks?market=ES";
+        String endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id +"/tracks?market=US";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     Gson gson = new Gson();
@@ -85,7 +85,6 @@ public class SongService {
             }
         };
         q.add(jsonObjectRequest);
-        return songs;
     }
 
 }

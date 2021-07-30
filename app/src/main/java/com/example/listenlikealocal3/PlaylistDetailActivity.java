@@ -32,11 +32,8 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private ArrayList<Artist> artistList = new ArrayList<>();
     private ArrayList<String> artistNameList = new ArrayList<>();
     private SongService playlistItems;
-    private RequestQueue q;
 
-    //array adapter for list view
     private ArrayAdapter arrayAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

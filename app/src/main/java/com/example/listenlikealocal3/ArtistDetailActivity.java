@@ -31,6 +31,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
     TextView artistName;
     TextView artistDetails;
     String BASE_URL = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=";
+    //"https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Pet_door&formatversion=2&exsentences=10&exlimit=1&explaintext=1"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,9 @@ public class ArtistDetailActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         Log.i("TAG", "log is working");
 
-        client.get(BASE_URL+artistObject, new JsonHttpResponseHandler() {
+        String artistNm = "Michael Jackson";
+
+        client.get("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&formatversion=2&exsentences=10&exlimit=1&explaintext=1&titles="+artistObject, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d("TAG", "onSuccess");
@@ -56,25 +59,19 @@ public class ArtistDetailActivity extends AppCompatActivity {
                     JSONObject query = jsonObject.getJSONObject("query");
                     Log.i("TAG", "QUERY: " + query.toString());
 
-                    JSONObject pages = query.getJSONObject("pages");
+                    JSONArray pages = query.getJSONArray("pages");
                     Log.i("TAG", "PAGES: " + pages.toString());
 
-                    for (int i = 0; i<pages.names().length(); i++) {
-                        String page_id = pages.names().getString(i);
-                        Log.v("TAG", page_id);
-
-                    JSONObject items = pages.getJSONObject(page_id);
-                    Log.i("TAG", "ITEMS: " + items.toString());
-
-                    String title = items.getString("title");
-                    Log.i("TAG", "TITLE: " + title);
-                    artistName.setText(title);
-
-                    String text = items.getString("extract");
-                    Log.i("TAG", "TEXT: " + text);
-                    artistDetails.setText(text);
-
+                    for (int i = 0; i < pages.length(); i++) {
+                        JSONObject items = pages.getJSONObject(i);
+                        String title = items.getString("title");
+                        artistName.setText(title);
+                        Log.i("TAG", "TITLE: " + title);
+                        String text = items.getString("extract");
+                        Log.i("TAG", "TEXT: "+ text);
+                        artistDetails.setText(text);
                     }
+
                 } catch (JSONException e) {
                     Log.e("TAG", "Hit json exception", e);
                     e.printStackTrace();
