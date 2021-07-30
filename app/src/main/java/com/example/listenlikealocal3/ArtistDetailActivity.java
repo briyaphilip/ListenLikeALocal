@@ -30,8 +30,6 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
     TextView artistName;
     TextView artistDetails;
-    String BASE_URL = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=";
-    //"https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&titles=Pet_door&formatversion=2&exsentences=10&exlimit=1&explaintext=1"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +82,5 @@ public class ArtistDetailActivity extends AppCompatActivity {
             }
 
         });
-
-
-
 }
 }
