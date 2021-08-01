@@ -40,28 +40,19 @@ public class LocationHistoryActivity extends AppCompatActivity {
     }
 
     private void queryLocations() {
-        // specify what type of data we want to query - Post.class
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        // limit query to latest 20 items
         query.setLimit(20);
-        // order posts by creation date (newest first)
         query.addDescendingOrder("createdAt");
-        // start an asynchronous call for posts
         query.findInBackground(new FindCallback<Location>() {
             @Override
             public void done(List<Location> locations, ParseException e) {
-                // check for errors
                 if (e != null) {
                     Log.e("TAG", "Issue with getting locations", e);
                     return;
                 }
-
-                // for debugging purposes let's print every post description to logcat
                 for (Location location : locations) {
                     Log.i("TAG", "Location: " + location.getLocation());
                 }
-
-                // save received posts to list and notify adapter of new data
                 locationList.addAll(locations);
                 adapter.notifyDataSetChanged();
             }

@@ -64,7 +64,8 @@ dependencies {
     implementation 'org.parceler:parceler-api:1.1.12'
     annotationProcessor 'org.parceler:parceler:1.1.12'
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.24.1"
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
+    implementation 'com.irozon.justbar:justbar:1.0.1'
 
 
 

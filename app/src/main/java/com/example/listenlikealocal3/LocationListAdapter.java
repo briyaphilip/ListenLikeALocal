@@ -69,7 +69,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
 
         }
         public void bind(Location location) {
-            // Bind the post data to the view elements
             locationName.setText(location.getLocation());
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
