@@ -36,7 +36,8 @@ public class PlaylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
 
-        String country_code = getIntent().getStringExtra("country_code");
+        //String country_code = getIntent().getStringExtra("country_code");
+        String country_code = Parcels.unwrap(getIntent().getParcelableExtra("country_code"));
         String limit = "20";
 
         binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);

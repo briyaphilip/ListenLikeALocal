@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ListenLikeALocal3">
-        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".LocationHistoryActivity"></activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".LocationInputActivity" />
         <activity android:name=".PlaylistDetailActivity" />
         <activity android:name=".PlaylistActivity" />
