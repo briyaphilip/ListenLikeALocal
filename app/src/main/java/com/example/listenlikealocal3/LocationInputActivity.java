@@ -2,9 +2,14 @@ package com.example.listenlikealocal3;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,9 +29,9 @@ public class LocationInputActivity extends AppCompatActivity {
     Button etButton;
     EditText etlocation;
     String country_code;
-    Button logoutBtn;
     ParseException exception;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +42,7 @@ public class LocationInputActivity extends AppCompatActivity {
 
         etButton.setOnClickListener(v -> {
             String locationInput = etlocation.getText().toString();
-            if (locationInput.isEmpty()){
+            if (locationInput.isEmpty()) {
                 Toast.makeText(LocationInputActivity.this, "Location cannot be empty", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -51,9 +56,6 @@ public class LocationInputActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        logoutBtn = findViewById(R.id.logoutBtn);
-        logoutBtn.setOnClickListener(v -> onLogoutButton(v));
-
     }
 
     private void saveLocation(String locationInput, ParseUser currentUser, ParseException ex) {
@@ -66,14 +68,14 @@ public class LocationInputActivity extends AppCompatActivity {
                 Log.e("TAG", "error while saving", e);
                 Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
-            if(ex != null) {
+            if (ex != null) {
                 final int statusCode = ex.getCode();
                 if (statusCode == ParseException.OBJECT_NOT_FOUND) {
 
-            Log.i("TAG", "Location save was successful!");
-            etlocation.setText("");
+                    Log.i("TAG", "Location save was successful!");
+                    etlocation.setText("");
+                }
             }
-        }
         });
     }
 
@@ -84,15 +86,12 @@ public class LocationInputActivity extends AppCompatActivity {
                 Log.e("TAG", "issue getting locations", e);
                 return;
             }
-            for (Location location: locations) {
-                Log.i("TAG", "Location: "+ location.getLocation());
+            for (Location location : locations) {
+                Log.i("TAG", "Location: " + location.getLocation());
             }
         });
     }
 
-    public void onLogoutButton(View view) {
-        ParseUser.logOut();
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        finish();
-    }
+
+
 }

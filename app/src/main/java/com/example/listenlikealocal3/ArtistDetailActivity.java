@@ -72,6 +72,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     Log.e("TAG", "Hit json exception", e);
+                    artistDetails.setText("No info found");
                     e.printStackTrace();
                 }
             }
