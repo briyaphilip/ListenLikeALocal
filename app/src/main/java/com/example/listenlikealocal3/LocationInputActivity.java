@@ -97,6 +97,4 @@ public class LocationInputActivity extends AppCompatActivity {
         });
     }
 
-
-
 }

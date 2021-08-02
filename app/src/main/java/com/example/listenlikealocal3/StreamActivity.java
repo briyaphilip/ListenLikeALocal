@@ -96,6 +96,4 @@ public class StreamActivity extends AppCompatActivity {
         ParseUser currentUser = ParseUser.getCurrentUser();
         finish();
     }
-
-
 }
