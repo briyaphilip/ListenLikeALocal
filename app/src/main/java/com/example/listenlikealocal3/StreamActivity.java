@@ -70,6 +70,7 @@ public class StreamActivity extends AppCompatActivity {
                 int position = viewHolder.getBindingAdapterPosition();
                 locationList.remove(viewHolder.getBindingAdapterPosition());
                 adapter.notifyItemRemoved(viewHolder.getBindingAdapterPosition());
+                deleteQuery(deletedLocation);
 
                 Snackbar.make(rvLocations, deletedLocation.getLocation(), Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
                     @Override
@@ -113,6 +114,21 @@ public class StreamActivity extends AppCompatActivity {
                 }
                 locationList.addAll(locations);
                 adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void deleteQuery(Location locationName){
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> objects, ParseException e) {
+                if (e != null) {
+                    Log.e("TAG", "Issue with finding location", e);
+                    return;
+                }
+                locationName.deleteInBackground();
+                Log.i("TAG", "location deleted");
             }
         });
     }
