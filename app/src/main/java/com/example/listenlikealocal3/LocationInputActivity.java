@@ -22,6 +22,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
 public class LocationInputActivity extends AppCompatActivity {
@@ -31,7 +33,6 @@ public class LocationInputActivity extends AppCompatActivity {
     String country_code;
     ParseException exception;
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class LocationInputActivity extends AppCompatActivity {
             country_code = etlocation.getText().toString();
 
             Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
-            intent.putExtra("country_code", country_code);
+            intent.putExtra("country_code", Parcels.wrap(country_code));
             startActivity(intent);
         });
 

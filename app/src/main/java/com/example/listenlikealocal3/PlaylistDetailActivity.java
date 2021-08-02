@@ -90,7 +90,6 @@ public class PlaylistDetailActivity extends AppCompatActivity {
 
         });
 
-
     }
 
 }

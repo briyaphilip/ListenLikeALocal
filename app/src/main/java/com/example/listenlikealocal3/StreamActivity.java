@@ -34,8 +34,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ibrahimsn.lib.SmoothBottomBar;
-
 
 public class StreamActivity extends AppCompatActivity {
 
@@ -45,7 +43,6 @@ public class StreamActivity extends AppCompatActivity {
     private FloatingActionButton fab;
 
 
-    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +90,7 @@ public class StreamActivity extends AppCompatActivity {
         });
     }
 
-    public void onLogoutButton(MenuItem item) {
+    public void onLogoutButton(View view) {
         ParseUser.logOut();
         ParseUser currentUser = ParseUser.getCurrentUser();
         finish();
