@@ -56,7 +56,11 @@ public class LocationInputActivity extends AppCompatActivity {
             intent.putExtra("country_code", Parcels.wrap(country_code));
             startActivity(intent);
         });
+    }
 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     private void saveLocation(String locationInput, ParseUser currentUser, ParseException ex) {

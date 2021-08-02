@@ -45,8 +45,6 @@ public class ArtistDetailActivity extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         Log.i("TAG", "log is working");
 
-        String artistNm = "Michael Jackson";
-
         client.get("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&formatversion=2&exsentences=10&exlimit=1&explaintext=1&titles="+artistObject, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
@@ -83,5 +81,11 @@ public class ArtistDetailActivity extends AppCompatActivity {
             }
 
         });
-}
+    }
+
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
 }

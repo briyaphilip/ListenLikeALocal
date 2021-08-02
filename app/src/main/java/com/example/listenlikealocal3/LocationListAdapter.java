@@ -53,7 +53,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
     public void addAll(List<Location> list) {
         locations.addAll(list);
         notifyDataSetChanged();

@@ -66,6 +66,7 @@ public class StreamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(StreamActivity.this, LocationInputActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }

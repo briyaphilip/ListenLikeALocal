@@ -101,5 +101,6 @@ public class LoginActivity extends AppCompatActivity {
     private void goFeedActivity() {
         Intent i = new Intent(this, StreamActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }

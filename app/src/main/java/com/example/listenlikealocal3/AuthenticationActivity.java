@@ -95,6 +95,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     private void startMainActivity() {
         Intent intent = new Intent(AuthenticationActivity.this, LoginActivity.class);
         startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 }
 

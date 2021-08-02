@@ -39,7 +39,6 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //data binding for easy access
         binding = DataBindingUtil.setContentView(PlaylistDetailActivity.this, R.layout.activity_playlist_details);
 
         Playlist playlistObject = (Playlist) Parcels.unwrap(getIntent().getParcelableExtra("playlist"));
@@ -59,6 +58,11 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         );
     }
 
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
     private void getSongsForListView(String playlist_id){
         playlistItems.getPlaylistItems(() -> {
             songsList = playlistItems.getSongs();
@@ -74,8 +78,8 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         for (int i = 0; i < songsList.size(); i++) {
             Song song = songsList.get(i);
             Artist artist = artistList.get(i);
-            Log.i("TAG", song.getName() + " by: " + artist.getName());
-            songNameList.add(song.getName() + " by: " + artist.getName());
+            Log.i("TAG", song.getName() + " by " + artist.getName());
+            songNameList.add(song.getName() + " by " + artist.getName());
             artistNameList.add(artist.getName());
         }
 
@@ -87,7 +91,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ArtistDetailActivity.class);
             intent.putExtra("artist", Parcels.wrap(artistNameList.get(position)));
             startActivity(intent);
-
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });
 
     }
