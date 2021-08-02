@@ -25,16 +25,16 @@ Listen Like a Local is an app that will use the Spotify API and the Last.fm API 
 
 **Required Must-have Stories**
 
-* User can explore and save Spotify playlists after entering in the country 
+* User can explore and Spotify playlists after entering in the country code
+* User can save Spotify playlists 
 * User explore artist info
-* User can explore more songs by specific artist
-* User can make new playlists similar to the featured playlist, which helps discover new music
-* profile page where user can see saved playlists
+* Profile page where user can see location history and saved playlists
 
 
 **Optional Nice-to-have Stories**
 
 * User can view travel history on a map
+* User can hear song when clicked
 * User can explore information about the music in that country 
 * User can filter playlists by mood/danceability
 
