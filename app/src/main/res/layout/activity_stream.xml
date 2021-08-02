@@ -17,17 +17,6 @@
         android:layout_alignParentTop="true"
         android:padding="8dp" />
 
-<!--    <me.ibrahimsn.lib.SmoothBottomBar-->
-<!--        android:id="@+id/bottomBar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginStart="1dp"-->
-<!--        android:layout_marginBottom="2dp"-->
-<!--        app:backgroundColor="@color/colorPrimary"-->
-<!--        app:menu="@menu/menu" />-->
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
