@@ -6,7 +6,6 @@ public class Song {
     private String id;
     private String artist;
 
-
     public Song(){ }
 
     public Song(String name, String id, String artist){

@@ -5,25 +5,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.RequestQueue;
-import com.example.listenlikealocal3.Connectors.SongService;
 import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistDetailsBinding;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ListIterator;
 
 public class PlaylistDetailActivity extends AppCompatActivity {
     private ActivityPlaylistDetailsBinding binding;
@@ -31,7 +26,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
     private ArrayList<String> songNameList = new ArrayList<>();
     private ArrayList<Artist> artistList = new ArrayList<>();
     private ArrayList<String> artistNameList = new ArrayList<>();
-    private SongService playlistItems;
+    private SpotifyClient playlistItems;
 
     private ArrayAdapter arrayAdapter;
 
@@ -46,7 +41,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
         String name = sp.getString("name", null);
         binding.playlistName.setText(name);
-        playlistItems = new SongService(getApplicationContext());
+        playlistItems = new SpotifyClient(getApplicationContext());
         String playlist_id = "";
         playlist_id = playlistObject.getId();
         getSongsForListView(playlist_id);

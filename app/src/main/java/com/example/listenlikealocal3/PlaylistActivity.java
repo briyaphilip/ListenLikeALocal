@@ -6,15 +6,11 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.GestureDetector;
-import android.widget.Adapter;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.example.listenlikealocal3.Model.Playlist;
-import com.example.listenlikealocal3.Services.Playlists;
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistsBinding;
 
 
@@ -26,10 +22,8 @@ public class PlaylistActivity extends AppCompatActivity {
     private ActivityPlaylistsBinding binding;
     private ArrayList<Playlist> playlistsList = new ArrayList<>();
     private ArrayList<String> playlistNameList = new ArrayList<>();
-    private Playlists playlists;
-    private RequestQueue q;
+    private SpotifyClient playlists;
 
-    //array adapter for list view
     private ArrayAdapter arrayAdapter;
 
     @Override
@@ -44,7 +38,8 @@ public class PlaylistActivity extends AppCompatActivity {
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
         String name = sp.getString("name", null);
         binding.nameTxtViewName.setText(name);
-        playlists = new Playlists(getApplicationContext());
+        playlists = new SpotifyClient(getApplicationContext());
+
         getPlaylistsForListView(country_code, limit);
 
         arrayAdapter = new ArrayAdapter<>(

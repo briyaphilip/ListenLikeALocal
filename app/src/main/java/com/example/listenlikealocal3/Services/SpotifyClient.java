@@ -1,15 +1,19 @@
-package com.example.listenlikealocal3.Connectors;
+package com.example.listenlikealocal3.Services;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.listenlikealocal3.Connectors.AsyncHandler;
 import com.example.listenlikealocal3.Model.Artist;
+import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
 import com.google.gson.Gson;
 
@@ -21,22 +25,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SongService {
-    private ArrayList<Song> songs = new ArrayList<>();
-    public ArrayList<Artist> artists = new ArrayList<>();
-    private SharedPreferences msharedPreferences;
-    private RequestQueue q;
+public class SpotifyClient extends AppCompatActivity {
+    private final ArrayList<Song> songs = new ArrayList<>();
+    private final ArrayList<Artist> artists = new ArrayList<>();
+    private final SharedPreferences sp;
+    private final RequestQueue q;
+    private final ArrayList<Playlist> playlists = new ArrayList<Playlist>();
 
-    public SongService(Context context) {
-        msharedPreferences = context.getSharedPreferences("SPOTIFY", 0);
+    public SpotifyClient(Context context) {
+        sp = context.getSharedPreferences("SPOTIFY", 0);
         q = Volley.newRequestQueue(context);
     }
+
     public ArrayList<Song> getSongs() {
         return songs;
     }
 
     public ArrayList<Artist> getArtist() {
         return artists;
+    }
+
+    public  ArrayList<Playlist> getPlaylists(){
+        return playlists;
     }
 
     public void getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
@@ -78,7 +88,7 @@ public class SongService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
-                String token = msharedPreferences.getString("token", "");
+                String token = sp.getString("token", "");
                 String auth = "Bearer " + token;
                 headers.put("Authorization", auth);
                 return headers;
@@ -87,5 +97,51 @@ public class SongService {
         q.add(jsonObjectRequest);
     }
 
-}
+    public void getFeaturedPlaylists(final AsyncHandler callback, String country_code, String limit){
+        String url = "https://api.spotify.com/v1/browse/featured-playlists?country=" + country_code + "&limit=" + limit;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
+            Gson gson = new Gson();
+            JSONObject playlistObj = response.optJSONObject("playlists");
+            JSONArray items = null;
+            try {
+                items = playlistObj.getJSONArray("items");
+                Log.d("PLAYLISTS", items.toString());
+                for (int i = 0; i < items.length(); i++) {
+                    try{
+                        JSONObject obj = items.getJSONObject(i);
 
+                        String id = obj.getString("id");
+                        String name = obj.getString("name");
+
+                        Log.d("PLAYLIST ID", id);
+                        Log.d("PLAYLIST NAME", name);
+
+                        Playlist playlist = new Playlist(name, id);
+                        playlists.add(playlist);
+
+                    } catch (JSONException e){ }
+                }
+                callback.finished();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> getFeaturedPlaylists(() -> {
+
+        }, country_code, limit)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = sp.getString("token", "");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                headers.put("country", country_code);
+                headers.put("limit", limit);
+                return headers;
+            }
+        };
+        q.add(jsonObjectRequest);
+
+    }
+}

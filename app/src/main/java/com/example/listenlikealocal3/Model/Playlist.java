@@ -10,9 +10,7 @@ public class Playlist {
     private String name;
     private String id;
 
-
     public Playlist(){ }
-
 
     public Playlist(String name, String id){
         this.name = name;

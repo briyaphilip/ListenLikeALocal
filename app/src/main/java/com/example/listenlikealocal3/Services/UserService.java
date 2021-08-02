@@ -3,7 +3,6 @@ package com.example.listenlikealocal3.Services;
 import android.content.SharedPreferences;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.listenlikealocal3.Connectors.AsyncHandler;
@@ -27,16 +26,16 @@ public class UserService {
     public User getUser() {
         return user;
     }
-    //make call to endpoint to get user info
+
+    //make request
     public void get(final AsyncHandler callBack) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ENDPOINT, null, response -> {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(ENDPOINT, null, response -> {
             Gson gson = new Gson();
             user = gson.fromJson(response.toString(), User.class);
             callBack.finished();
         }, error -> get(() -> {
 
         })) {
-            //need this override method to provide header to request
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<>();
@@ -48,5 +47,8 @@ public class UserService {
         };
         q.add(jsonObjectRequest);
     }
+
+
+
 
 }

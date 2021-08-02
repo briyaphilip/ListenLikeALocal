@@ -76,6 +76,7 @@ public class StreamActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         locationList.add(position, deletedLocation);
+                        addQuery(deletedLocation);
                         adapter.notifyItemRangeInserted(position, locationList.size());
                     }
                 }).show();
@@ -122,13 +123,29 @@ public class StreamActivity extends AppCompatActivity {
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
         query.findInBackground(new FindCallback<Location>() {
             @Override
-            public void done(List<Location> objects, ParseException e) {
+            public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
                     Log.e("TAG", "Issue with finding location", e);
                     return;
                 }
                 locationName.deleteInBackground();
                 Log.i("TAG", "location deleted");
+            }
+        });
+    }
+
+    private void addQuery(Location locationName){
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> locations, ParseException e) {
+                if (e != null) {
+                    Log.e("TAG", "Issue with finding location", e);
+                    return;
+                }
+                locationList.add(locationName);
+                adapter.notifyDataSetChanged();
+                Log.i("TAG", "location added");
             }
         });
     }

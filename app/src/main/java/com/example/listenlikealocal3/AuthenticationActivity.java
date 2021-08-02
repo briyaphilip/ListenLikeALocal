@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.listenlikealocal3.Connectors.UserService;
-import com.example.listenlikealocal3.Model.Playlist;
+import com.example.listenlikealocal3.Services.UserService;
 import com.example.listenlikealocal3.Model.User;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
