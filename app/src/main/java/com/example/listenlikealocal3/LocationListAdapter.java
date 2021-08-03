@@ -23,8 +23,9 @@ import java.util.List;
 
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
 
-    private Context context;
-    private List<Location> locations;
+    public static final String TAG = "LocationListAdapter";
+    private final Context context;
+    private final List<Location> locations;
 
     public LocationListAdapter(Context context, List<Location> locations) {
         this.context = context;
@@ -61,7 +62,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView locationName;
+        private final TextView locationName;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -76,14 +77,13 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
                     Intent intent = new Intent(context, PlaylistActivity.class);
                     intent.putExtra("country_code", Parcels.wrap(location.getLocation()));
                     context.startActivity(intent);
-                    Log.i("TAG", location.getLocation());
+                    Log.i(TAG, location.getLocation());
                 }
             });
 
         }
 
     }
-
 
 }
 

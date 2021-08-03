@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class PlaylistActivity extends AppCompatActivity {
     private ActivityPlaylistsBinding binding;
     private ArrayList<Playlist> playlistsList = new ArrayList<>();
-    private ArrayList<String> playlistNameList = new ArrayList<>();
+    private final ArrayList<String> playlistNameList = new ArrayList<>();
     private SpotifyClient playlists;
 
     private ArrayAdapter arrayAdapter;

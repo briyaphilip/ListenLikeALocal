@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
-import com.example.listenlikealocal3.Services.UserService;
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.example.listenlikealocal3.Model.User;
 import com.spotify.sdk.android.auth.AuthorizationClient;
 import com.spotify.sdk.android.auth.AuthorizationRequest;
@@ -19,15 +19,12 @@ import static com.spotify.sdk.android.auth.AuthorizationResponse.Type.TOKEN;
 
 public class AuthenticationActivity extends AppCompatActivity {
 
-    private SharedPreferences.Editor editor;
-    private SharedPreferences msharedPreferences;
-
-    private RequestQueue queue;
-
-    //enter your own client ID
+    public static final String TAG = "AuthenticationActivity";
     private static final String CLIENT_ID  = "12b41bf4bae9497bb882c55db18c0c0e";
     private static final int REQUEST_CODE = 1337;
     public static final String REDIRECT_URI = "com.listenlikealocal://callback";
+
+    private SharedPreferences.Editor editor;
 
 
     @Override
@@ -35,11 +32,10 @@ public class AuthenticationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         LoginActivityAuthentication();
-        msharedPreferences = this.getSharedPreferences("SPOTIFY", 0);
-        queue = Volley.newRequestQueue(this);
+        SharedPreferences msharedPreferences = this.getSharedPreferences("SPOTIFY", 0);
+        RequestQueue queue = Volley.newRequestQueue(this);
     }
 
-    //Authentication from Spotify API
     protected void LoginActivityAuthentication(){
         AuthorizationRequest.Builder builder = new AuthorizationRequest.Builder(CLIENT_ID, TOKEN, REDIRECT_URI);
         builder.setScopes(new String[]{"streaming user-top-read, user-read-recently-played,user-library-modify,user-read-email,user-read-private"});
@@ -47,14 +43,12 @@ public class AuthenticationActivity extends AppCompatActivity {
         AuthorizationClient.openLoginActivity(this, REQUEST_CODE, request);
     }
 
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
 
             switch (response.getType()) {
-                // Response was successful and contains auth token
                 case TOKEN:
                     editor = getSharedPreferences("SPOTIFY", 0).edit();
                     editor.putString("token", response.getAccessToken());
@@ -63,29 +57,26 @@ public class AuthenticationActivity extends AppCompatActivity {
                     waitForUserInfo();
                     break;
 
-                // Auth flow returned an error
                 case ERROR:
-                    // Handle error response
+                    Log.e(TAG, "Error");
                     break;
 
-                // Most likely auth flow was cancelled
                 default:
-                    // Handle other cases
+                    Log.e(TAG, "Auth flow cancelled");
             }
         }
     }
 
     private void waitForUserInfo() {
-        UserService userService = new UserService(queue, msharedPreferences);
+        SpotifyClient userService = new SpotifyClient(getApplicationContext());
         userService.get(() -> {
-            //wait for user info form callback and saved to shared preferences
             User user = userService.getUser();
             editor = getSharedPreferences("SPOTIFY", 0).edit();
 
             editor.putString("userid", user.id);
             editor.putString("name", user.display_name);
 
-            editor.commit();
+            editor.apply();
             startMainActivity();
         });
     }

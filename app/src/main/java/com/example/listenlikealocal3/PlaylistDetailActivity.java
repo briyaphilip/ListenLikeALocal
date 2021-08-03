@@ -21,12 +21,15 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 
 public class PlaylistDetailActivity extends AppCompatActivity {
+
+    public static final String TAG = "PlaylistDetailActivity";
     private ActivityPlaylistDetailsBinding binding;
     private ArrayList<Song> songsList = new ArrayList<>();
-    private ArrayList<String> songNameList = new ArrayList<>();
     private ArrayList<Artist> artistList = new ArrayList<>();
-    private ArrayList<String> artistNameList = new ArrayList<>();
     private SpotifyClient playlistItems;
+    private final ArrayList<String> songNameList = new ArrayList<>();
+    private final ArrayList<String> artistNameList = new ArrayList<>();
+
 
     private ArrayAdapter arrayAdapter;
 
@@ -73,7 +76,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         for (int i = 0; i < songsList.size(); i++) {
             Song song = songsList.get(i);
             Artist artist = artistList.get(i);
-            Log.i("TAG", song.getName() + " by " + artist.getName());
+            Log.i(TAG, song.getName() + " by " + artist.getName());
             songNameList.add(song.getName() + " by " + artist.getName());
             artistNameList.add(artist.getName());
         }

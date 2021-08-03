@@ -15,6 +15,7 @@ import com.example.listenlikealocal3.Connectors.AsyncHandler;
 import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
+import com.example.listenlikealocal3.Model.User;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -26,11 +27,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SpotifyClient extends AppCompatActivity {
+
     private final ArrayList<Song> songs = new ArrayList<>();
     private final ArrayList<Artist> artists = new ArrayList<>();
     private final SharedPreferences sp;
     private final RequestQueue q;
     private final ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+    private User user;
 
     public SpotifyClient(Context context) {
         sp = context.getSharedPreferences("SPOTIFY", 0);
@@ -47,6 +50,10 @@ public class SpotifyClient extends AppCompatActivity {
 
     public  ArrayList<Playlist> getPlaylists(){
         return playlists;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public void getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
@@ -82,8 +89,6 @@ public class SpotifyClient extends AppCompatActivity {
                     }
                     callBack.finished();
                 }, error -> {
-                    return;
-
                 }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -144,4 +149,25 @@ public class SpotifyClient extends AppCompatActivity {
         q.add(jsonObjectRequest);
 
     }
+
+    public void get(final AsyncHandler callBack) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest("https://api.spotify.com/v1/me", null, response -> {
+            Gson gson = new Gson();
+            user = gson.fromJson(response.toString(), User.class);
+            callBack.finished();
+        }, error -> get(() -> {
+
+        })) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<>();
+                String token = sp.getString("token", "");
+                String auth = "Bearer " + token;
+                headers.put("Authorization", auth);
+                return headers;
+            }
+        };
+        q.add(jsonObjectRequest);
+    }
+
 }

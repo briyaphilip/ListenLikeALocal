@@ -2,17 +2,13 @@ package com.example.listenlikealocal3.Model;
 
 public class Wiki {
 
-    private String title;
-    private String id;
+    private final String title;
+    private final String id;
     private String text;
 
     public Wiki(String title, String id){
         this.title = title;
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
     }
 
     public String getId() {

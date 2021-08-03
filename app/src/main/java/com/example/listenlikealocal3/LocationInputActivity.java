@@ -28,6 +28,8 @@ import java.util.List;
 
 public class LocationInputActivity extends AppCompatActivity {
 
+    public static final String TAG = "LocationInputActivity";
+
     Button etButton;
     EditText etlocation;
     String country_code;
@@ -49,7 +51,7 @@ public class LocationInputActivity extends AppCompatActivity {
             }
             ParseUser currentUser = ParseUser.getCurrentUser();
             saveLocation(locationInput, currentUser, exception);
-            Log.i("TAG", "onClick location input");
+            Log.i(TAG, "onClick location input");
             country_code = etlocation.getText().toString();
 
             Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
@@ -70,31 +72,16 @@ public class LocationInputActivity extends AppCompatActivity {
 
         location.saveInBackground(e -> {
             if (e != null) {
-                Log.e("TAG", "error while saving", e);
+                Log.e(TAG, "error while saving", e);
                 Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
             if (ex != null) {
                 final int statusCode = ex.getCode();
                 if (statusCode == ParseException.OBJECT_NOT_FOUND) {
-
-                    Log.i("TAG", "Location save was successful!");
+                    Log.i(TAG, "Location save was successful!");
                     etlocation.setText("");
                 }
             }
         });
     }
-
-    private void queryLocation() {
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.findInBackground((locations, e) -> {
-            if (e != null) {
-                Log.e("TAG", "issue getting locations", e);
-                return;
-            }
-            for (Location location : locations) {
-                Log.i("TAG", "Location: " + location.getLocation());
-            }
-        });
-    }
-
 }

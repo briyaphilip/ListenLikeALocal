@@ -28,6 +28,8 @@ import okhttp3.Headers;
 
 public class ArtistDetailActivity extends AppCompatActivity {
 
+    public static final String TAG = "ArtistDetailActivity";
+
     TextView artistName;
     TextView artistDetails;
 
@@ -40,36 +42,36 @@ public class ArtistDetailActivity extends AppCompatActivity {
         artistDetails = findViewById(R.id.artistDets);
 
         String artistObject = (String) Parcels.unwrap(getIntent().getParcelableExtra("artist"));
-        Log.i("TAG", "parcel name:" + artistObject);
+        Log.i(TAG, "parcel name:" + artistObject);
 
         AsyncHttpClient client = new AsyncHttpClient();
-        Log.i("TAG", "log is working");
+        Log.i(TAG, "log is working");
 
         client.get("https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&formatversion=2&exsentences=10&exlimit=1&explaintext=1&titles="+artistObject, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d("TAG", "onSuccess");
+                Log.d(TAG, "onSuccess");
                 JSONObject jsonObject = json.jsonObject;
 
                 try {
                     JSONObject query = jsonObject.getJSONObject("query");
-                    Log.i("TAG", "QUERY: " + query.toString());
+                    Log.i(TAG, "QUERY: " + query.toString());
 
                     JSONArray pages = query.getJSONArray("pages");
-                    Log.i("TAG", "PAGES: " + pages.toString());
+                    Log.i(TAG, "PAGES: " + pages.toString());
 
                     for (int i = 0; i < pages.length(); i++) {
                         JSONObject items = pages.getJSONObject(i);
                         String title = items.getString("title");
                         artistName.setText(title);
-                        Log.i("TAG", "TITLE: " + title);
+                        Log.i(TAG, "TITLE: " + title);
                         String text = items.getString("extract");
-                        Log.i("TAG", "TEXT: "+ text);
+                        Log.i(TAG, "TEXT: "+ text);
                         artistDetails.setText(text);
                     }
 
                 } catch (JSONException e) {
-                    Log.e("TAG", "Hit json exception", e);
+                    Log.e(TAG, "Hit json exception", e);
                     artistDetails.setText("No info found");
                     e.printStackTrace();
                 }
@@ -77,9 +79,8 @@ public class ArtistDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int i, Headers headers, String s, Throwable throwable) {
-                Log.d("TAG", "onFailure");
+                Log.d(TAG, "onFailure");
             }
-
         });
     }
 

@@ -39,10 +39,10 @@ import java.util.List;
 
 public class StreamActivity extends AppCompatActivity {
 
+    public static final String TAG = "StreamActivity";
     private RecyclerView rvLocations;
     protected LocationListAdapter adapter;
     protected List<Location> locationList;
-    private FloatingActionButton fab;
 
 
     @Override
@@ -88,7 +88,7 @@ public class StreamActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         rvLocations.setLayoutManager(linearLayoutManager);
 
-        fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,11 +107,11 @@ public class StreamActivity extends AppCompatActivity {
             @Override
             public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
-                    Log.e("TAG", "Issue with getting locations", e);
+                    Log.e(TAG, "Issue with getting locations", e);
                     return;
                 }
                 for (Location location : locations) {
-                    Log.i("TAG", "Location: " + location.getLocation());
+                    Log.i(TAG, "Location: " + location.getLocation());
                 }
                 locationList.addAll(locations);
                 adapter.notifyDataSetChanged();
@@ -125,11 +125,11 @@ public class StreamActivity extends AppCompatActivity {
             @Override
             public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
-                    Log.e("TAG", "Issue with finding location", e);
+                    Log.e(TAG, "Issue with finding location", e);
                     return;
                 }
                 locationName.deleteInBackground();
-                Log.i("TAG", "location deleted");
+                Log.i(TAG, "location deleted");
             }
         });
     }
@@ -140,12 +140,12 @@ public class StreamActivity extends AppCompatActivity {
             @Override
             public void done(List<Location> locations, ParseException e) {
                 if (e != null) {
-                    Log.e("TAG", "Issue with finding location", e);
+                    Log.e(TAG, "Issue with finding location", e);
                     return;
                 }
                 locationList.add(locationName);
                 adapter.notifyDataSetChanged();
-                Log.i("TAG", "location added");
+                Log.i(TAG, "location added");
             }
         });
     }
