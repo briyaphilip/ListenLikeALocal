@@ -14,6 +14,7 @@ import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
 import com.example.listenlikealocal3.Services.SpotifyClient;
+import com.example.listenlikealocal3.Services.WikiClient;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistDetailsBinding;
 
 import org.parceler.Parcels;
@@ -86,7 +87,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
             String name = songNameList.get(position);
 
             Toast.makeText(this, "Clicked"+name, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, ArtistDetailActivity.class);
+            Intent intent = new Intent(this, WikiClient.class);
             intent.putExtra("artist", Parcels.wrap(artistNameList.get(position)));
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

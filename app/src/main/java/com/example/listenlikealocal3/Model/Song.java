@@ -4,6 +4,18 @@ public class Song {
     private String name;
     private String id;
 
+    public Song(){ }
+
+    public Song(String name){
+        this.name = name;
+        this.id = id;
+    }
+
+    public Song(String name, String id){
+        this.name = name;
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

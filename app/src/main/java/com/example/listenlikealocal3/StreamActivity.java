@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.annotation.SuppressLint;
 import android.content.ClipData;
@@ -23,7 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.listenlikealocal3.Model.Location;
+import com.example.listenlikealocal3.Model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
@@ -32,6 +35,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,8 @@ public class StreamActivity extends AppCompatActivity {
     private RecyclerView rvLocations;
     protected LocationListAdapter adapter;
     protected List<Location> locationList;
+    private SwipeRefreshLayout swipeContainer;
+    User user;
 
 
     @Override
@@ -57,6 +63,10 @@ public class StreamActivity extends AppCompatActivity {
 
         rvLocations.setAdapter(adapter);
         rvLocations.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvLocations.setLayoutManager(linearLayoutManager);
+
+        queryLocations();
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
             @Override
@@ -83,10 +93,19 @@ public class StreamActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(rvLocations);
 
-        queryLocations();
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                locationList.clear();
+                queryLocations();
+            }
+        });
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvLocations.setLayoutManager(linearLayoutManager);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -115,6 +134,7 @@ public class StreamActivity extends AppCompatActivity {
                 }
                 locationList.addAll(locations);
                 adapter.notifyDataSetChanged();
+                swipeContainer.setRefreshing(false);
             }
         });
     }

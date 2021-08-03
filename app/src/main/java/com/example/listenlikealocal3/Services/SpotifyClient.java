@@ -28,6 +28,7 @@ import java.util.Map;
 
 public class SpotifyClient extends AppCompatActivity {
 
+    public static final String TAG = "SpotifyClient";
     private final ArrayList<Song> songs = new ArrayList<>();
     private final ArrayList<Artist> artists = new ArrayList<>();
     private final SharedPreferences sp;
@@ -57,31 +58,33 @@ public class SpotifyClient extends AppCompatActivity {
     }
 
     public void getPlaylistItems(final AsyncHandler callBack, String playlist_id) {
-
         String endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id +"/tracks?market=US";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
+                    //use either gson or json
                     Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONArray("items");
+                    Log.i(TAG, "ITEMS: " + jsonArray);
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {
-                            Log.i("TAG", "PLAYLIST ID" + playlist_id);
+                            Log.i(TAG, "PLAYLIST ID: " + playlist_id);
                             JSONObject object = jsonArray.getJSONObject(n);
                             object = object.optJSONObject("track");
-                            Log.i("TAG", "TRACK: " + object.toString());
+                            Log.i(TAG, "TRACK: " + object.toString());
 
                             JSONArray album = object.getJSONArray("artists");
-                            Log.i("TAG", "LIST: " + album.toString());
+                            Log.i(TAG, "LIST: " + album.toString());
 
                             for(int i = 0; i < album.length(); i++) {
                                 JSONObject info = album.getJSONObject(i);
                                 Artist artistNm = new Artist();
                                 artistNm.setName(info.getString("name"));
                                 artists.add(artistNm);
-                                Log.i("TAG","NAME: " + artistNm.toString());
+                                Log.i(TAG,"NAME: " + artistNm.toString());
                             }
 
                             Song song = gson.fromJson(object.toString(), Song.class);
+                            Log.i(TAG, "SONG: " + song);
                             songs.add(song);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -105,7 +108,6 @@ public class SpotifyClient extends AppCompatActivity {
     public void getFeaturedPlaylists(final AsyncHandler callback, String country_code, String limit){
         String url = "https://api.spotify.com/v1/browse/featured-playlists?country=" + country_code + "&limit=" + limit;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, response -> {
-            Gson gson = new Gson();
             JSONObject playlistObj = response.optJSONObject("playlists");
             JSONArray items = null;
             try {
@@ -116,15 +118,17 @@ public class SpotifyClient extends AppCompatActivity {
                         JSONObject obj = items.getJSONObject(i);
 
                         String id = obj.getString("id");
-                        String name = obj.getString("name");
+                        Log.d(TAG,"PLAYLIST ID: " + id);
 
-                        Log.d("PLAYLIST ID", id);
-                        Log.d("PLAYLIST NAME", name);
+                        String name = obj.getString("name");
+                        Log.d(TAG,"PLAYLIST NAME: " + name);
 
                         Playlist playlist = new Playlist(name, id);
                         playlists.add(playlist);
 
-                    } catch (JSONException e){ }
+                    } catch (JSONException e){
+                        Log.e(TAG, "ERROR: " + e.toString());
+                    }
                 }
                 callback.finished();
 

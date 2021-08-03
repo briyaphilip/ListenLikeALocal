@@ -18,7 +18,7 @@
         <activity android:name=".LocationInputActivity" />
         <activity android:name=".PlaylistDetailActivity" />
         <activity android:name=".PlaylistActivity" />
-        <activity android:name=".ArtistDetailActivity" />
+        <activity android:name=".Services.WikiClient" />
         <activity android:name=".AuthenticationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
