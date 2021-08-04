@@ -62,7 +62,7 @@ public class SpotifyClient extends AppCompatActivity {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
                     //use either gson or json
-                    Gson gson = new Gson();
+//                    Gson gson = new Gson();
                     JSONArray jsonArray = response.optJSONArray("items");
                     Log.i(TAG, "ITEMS: " + jsonArray);
                     for (int n = 0; n < jsonArray.length(); n++) {
@@ -83,8 +83,11 @@ public class SpotifyClient extends AppCompatActivity {
                                 Log.i(TAG,"NAME: " + artistNm.toString());
                             }
 
-                            Song song = gson.fromJson(object.toString(), Song.class);
-                            Log.i(TAG, "SONG: " + song);
+//                            Song song = gson.fromJson(object.toString(), Song.class);
+                            Song song = new Song();
+                            song.setName(object.toString());
+
+                            Log.i(TAG, "SONG: " + song.getName());
                             songs.add(song);
                         } catch (JSONException e) {
                             e.printStackTrace();

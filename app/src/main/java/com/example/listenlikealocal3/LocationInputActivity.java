@@ -16,8 +16,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.listenlikealocal3.Model.Location;
+import com.parse.CountCallback;
 import com.parse.FindCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -33,7 +36,6 @@ public class LocationInputActivity extends AppCompatActivity {
     Button etButton;
     EditText etlocation;
     String country_code;
-    ParseException exception;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class LocationInputActivity extends AppCompatActivity {
                 return;
             }
             ParseUser currentUser = ParseUser.getCurrentUser();
-            saveLocation(locationInput, currentUser, exception);
+            saveLocation(locationInput, currentUser);
             Log.i(TAG, "onClick location input");
             country_code = etlocation.getText().toString();
 
@@ -60,28 +62,40 @@ public class LocationInputActivity extends AppCompatActivity {
         });
     }
 
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
-    private void saveLocation(String locationInput, ParseUser currentUser, ParseException ex) {
+    private void saveLocation(String locationInput, ParseUser currentUser) {
         Location location = new Location();
         location.setLocation(locationInput);
         location.setUser(currentUser);
 
+        ParseQuery<ParseObject> locationQuery = ParseQuery.getQuery("Location");
+        locationQuery.whereEqualTo("Location", locationInput);
+        locationQuery.countInBackground( new CountCallback() {
+            public void done(int count, ParseException e) {
+                if (e == null) {
+                    if (count == 0) {
+                        addNewLocation(location, locationInput);
+                    }
+                    else {
+                        Log.i(TAG, "Location already exists");
+                    }
+                } else {
+                    Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void addNewLocation (Location location, String locationInput) {
         location.saveInBackground(e -> {
             if (e != null) {
                 Log.e(TAG, "error while saving", e);
                 Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
-            if (ex != null) {
-                final int statusCode = ex.getCode();
-                if (statusCode == ParseException.OBJECT_NOT_FOUND) {
-                    Log.i(TAG, "Location save was successful!");
-                    etlocation.setText("");
-                }
-            }
         });
+    }
+
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }
