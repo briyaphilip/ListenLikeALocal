@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listenlikealocal3.Model.Location;
 import com.google.android.material.snackbar.Snackbar;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
 
 import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
@@ -61,9 +64,25 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         notifyDataSetChanged();
     }
 
-    public void deleteQuery(int position) {
+    public void deleteItem(int position) {
         locations.remove(position);
         notifyDataSetChanged();
+        deleteQuery(locations.get(position));
+    }
+
+    private void deleteQuery(Location locationName){
+        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
+        query.findInBackground(new FindCallback<Location>() {
+            @Override
+            public void done(List<Location> locations, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with finding location", e);
+                    return;
+                }
+                locationName.deleteInBackground();
+                Log.i(TAG, "location deleted");
+            }
+        });
     }
 
     public Context getContext() {
