@@ -6,6 +6,7 @@ import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.ItemTouchUIUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -13,8 +14,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -40,7 +45,6 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class StreamActivity extends AppCompatActivity {
 
     public static final String TAG = "StreamActivity";
@@ -48,8 +52,6 @@ public class StreamActivity extends AppCompatActivity {
     protected LocationListAdapter adapter;
     protected List<Location> locationList;
     private SwipeRefreshLayout swipeContainer;
-    User user;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,37 +63,7 @@ public class StreamActivity extends AppCompatActivity {
         locationList = new ArrayList<>();
         adapter = new LocationListAdapter(this, locationList);
 
-        rvLocations.setAdapter(adapter);
-        rvLocations.setLayoutManager(new LinearLayoutManager(this));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvLocations.setLayoutManager(linearLayoutManager);
-
         queryLocations();
-
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-            @Override
-            public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
-                Location deletedLocation = locationList.get(viewHolder.getBindingAdapterPosition());
-                int position = viewHolder.getBindingAdapterPosition();
-                locationList.remove(viewHolder.getBindingAdapterPosition());
-                adapter.notifyItemRemoved(viewHolder.getBindingAdapterPosition());
-                deleteQuery(deletedLocation);
-
-                Snackbar.make(rvLocations, deletedLocation.getLocation(), Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        locationList.add(position, deletedLocation);
-                        addQuery(deletedLocation);
-                        adapter.notifyItemRangeInserted(position, locationList.size());
-                    }
-                }).show();
-            }
-        }).attachToRecyclerView(rvLocations);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -116,6 +88,16 @@ public class StreamActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        setUpRecyclerView();
+    }
+
+    private void setUpRecyclerView() {
+        rvLocations.setAdapter(adapter);
+        rvLocations.setLayoutManager(new LinearLayoutManager(this));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(adapter));
+        itemTouchHelper.attachToRecyclerView(rvLocations);
     }
 
     private void queryLocations() {
@@ -135,37 +117,6 @@ public class StreamActivity extends AppCompatActivity {
                 locationList.addAll(locations);
                 adapter.notifyDataSetChanged();
                 swipeContainer.setRefreshing(false);
-            }
-        });
-    }
-
-    private void deleteQuery(Location locationName){
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with finding location", e);
-                    return;
-                }
-                locationName.deleteInBackground();
-                Log.i(TAG, "location deleted");
-            }
-        });
-    }
-
-    private void addQuery(Location locationName){
-        ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with finding location", e);
-                    return;
-                }
-                locationList.add(locationName);
-                adapter.notifyDataSetChanged();
-                Log.i(TAG, "location added");
             }
         });
     }

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listenlikealocal3.Model.Location;
@@ -58,6 +59,15 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     public void addAll(List<Location> list) {
         locations.addAll(list);
         notifyDataSetChanged();
+    }
+
+    public void deleteQuery(int position) {
+        locations.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
