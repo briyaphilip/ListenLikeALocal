@@ -1,7 +1,5 @@
 package com.example.listenlikealocal3.Model;
 
-import android.view.LayoutInflater;
-
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -11,6 +9,7 @@ public class Location extends ParseObject {
 
     public static final String LOCATION = "Location";
     public static final String USER = "User";
+    public static final String FLAG = "Flag";
 
     public Location() {
     }
@@ -30,4 +29,8 @@ public class Location extends ParseObject {
     public void setUser(ParseUser user) {
         put(USER, user);
     }
+
+    public String getFlag(String flag){return getFlag(FLAG);}
+
+    public void setFlag(String flag) {put(FLAG, flag);}
 }

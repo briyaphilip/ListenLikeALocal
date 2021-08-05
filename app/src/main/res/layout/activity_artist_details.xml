@@ -12,33 +12,35 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="17dp"
+        android:text="ARTIST NAME"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="100dp" />
+        tools:layout_editor_absoluteY="100dp"
+        android:textStyle="bold"
+        android:textSize="25dp"/>
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/artistImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/artistDets"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_weight="1"
-        android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginTop="15dp"
+        android:lines="30"
+        android:scrollbars="vertical"
+        android:scrollHorizontally="false"
+        android:textSize="15sp"
+        android:layout_below="@+id/artistImg"
+        />
 
-        <TextView
-            android:id="@+id/artistDets"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:lines="30"
-            android:scrollbars="vertical"
-            android:scrollHorizontally="false"
-            android:textSize="15sp" />
-
-    </ScrollView>
 
 </RelativeLayout>

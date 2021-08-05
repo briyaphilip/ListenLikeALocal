@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.listenlikealocal3.Model.Location;
 import com.example.listenlikealocal3.Model.User;
@@ -44,6 +45,8 @@ import org.json.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 public class StreamActivity extends AppCompatActivity {
 
@@ -90,6 +93,7 @@ public class StreamActivity extends AppCompatActivity {
         });
 
         setUpRecyclerView();
+
     }
 
     private void setUpRecyclerView() {

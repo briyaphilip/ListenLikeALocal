@@ -6,17 +6,26 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+import com.example.listenlikealocal3.Model.Location;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.example.listenlikealocal3.databinding.ActivityPlaylistsBinding;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+
+import okhttp3.Headers;
 
 public class PlaylistActivity extends AppCompatActivity {
     private ActivityPlaylistsBinding binding;
@@ -49,7 +58,7 @@ public class PlaylistActivity extends AppCompatActivity {
         );
     }
 
-    private void getPlaylistsForListView(String country_code, String limit){
+    private void getPlaylistsForListView(String country_code, String limit) {
         playlists.getFeaturedPlaylists(() -> {
             playlistsList = playlists.getPlaylists();
             updateListView(playlistsList);

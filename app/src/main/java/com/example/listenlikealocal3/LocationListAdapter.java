@@ -2,25 +2,20 @@ package com.example.listenlikealocal3;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listenlikealocal3.Model.Location;
-import com.google.android.material.snackbar.Snackbar;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
-import org.jetbrains.annotations.NotNull;
 import org.parceler.Parcels;
 
 import java.util.List;
@@ -70,7 +65,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         deleteQuery(locations.get(position));
     }
 
-    private void deleteQuery(Location locationName){
+    private void deleteQuery(Location locationName) {
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
         query.findInBackground(new FindCallback<Location>() {
             @Override
@@ -92,14 +87,17 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView locationName;
+        TextView flag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             locationName = itemView.findViewById(R.id.locationName);
+            flag = itemView.findViewById(R.id.flag);
 
         }
         public void bind(Location location) {
             locationName.setText(location.getLocation());
+//            flag.setText(location.getFlag(location.getLocation()));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
