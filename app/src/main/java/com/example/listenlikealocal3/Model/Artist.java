@@ -6,7 +6,7 @@ import org.parceler.Parcel;
 public class Artist{
     private String name ;
     private String id;
-    private String img;
+    private String imgUrl;
 
     public Artist() {
     }
@@ -27,7 +27,7 @@ public class Artist{
         this.id = id;
     }
 
-    public String getImg() {return img;}
+    public String getImg() {return imgUrl;}
 
-    public void setImg(String img) {this.img = img;}
+    public void setImg(String img) {this.imgUrl = img;}
 }

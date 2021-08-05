@@ -13,5 +13,6 @@
     <string name="top_artist_txtView">Top Artists</string>
     <string name="ft_playlist_txtView">Featured Playlists</string>
     <string name="song_txtView">Songs</string>
+    <string name="listen_like_a_local">Listen Like a Local</string>
 
 </resources>

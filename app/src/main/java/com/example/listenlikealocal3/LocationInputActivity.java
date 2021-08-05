@@ -33,6 +33,8 @@ import java.util.List;
 public class LocationInputActivity extends AppCompatActivity {
 
     public static final String TAG = "LocationInputActivity";
+    public static final String COUNTRY_CODE = "country_code";
+    public static final String LOCATION = "Location";
 
     Button etButton;
     EditText etlocation;
@@ -59,7 +61,7 @@ public class LocationInputActivity extends AppCompatActivity {
             country_code = etlocation.getText().toString();
 
             Intent intent = new Intent(getBaseContext(), PlaylistActivity.class);
-            intent.putExtra("country_code", Parcels.wrap(country_code));
+            intent.putExtra(COUNTRY_CODE, Parcels.wrap(country_code));
             startActivity(intent);
         });
     }
@@ -68,12 +70,13 @@ public class LocationInputActivity extends AppCompatActivity {
         Location location = new Location(locationInput, currentUser.toString(), flags);
         location.setLocation(locationInput);
         location.setUser(currentUser);
-        SpotifyClient flags = new SpotifyClient(getApplicationContext());
-        flags.getFlags(locationInput);
-        location.setFlag(flags.toString());
+        SpotifyClient spotifyClient = new SpotifyClient(getApplicationContext());
+        String flag = spotifyClient.getFlags(locationInput);
+        Log.i(TAG, "FLAG SAVED: " + flag);
+        location.setFlag(flag);
 
-        ParseQuery<ParseObject> locationQuery = ParseQuery.getQuery("Location");
-        locationQuery.whereEqualTo("Location", locationInput);
+        ParseQuery<ParseObject> locationQuery = ParseQuery.getQuery(LOCATION);
+        locationQuery.whereEqualTo(LOCATION, locationInput);
         locationQuery.countInBackground( new CountCallback() {
             public void done(int count, ParseException e) {
                 if (e == null) {

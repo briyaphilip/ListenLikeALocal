@@ -30,6 +30,7 @@ import okhttp3.Headers;
 public class WikiClient extends AppCompatActivity {
 
     public static final String TAG = "WikiClient";
+    public static final String ARTIST = "artist";
 
     TextView artistName;
     TextView artistDetails;
@@ -47,7 +48,7 @@ public class WikiClient extends AppCompatActivity {
 
         artistDetails.setMovementMethod(new ScrollingMovementMethod());
 
-        String artistObject = (String) Parcels.unwrap(getIntent().getParcelableExtra("artist"));
+        String artistObject = (String) Parcels.unwrap(getIntent().getParcelableExtra(ARTIST));
         Log.i(TAG, "parcel artist name:" + artistObject);
 
         AsyncHttpClient client = new AsyncHttpClient();

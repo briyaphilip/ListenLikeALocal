@@ -24,6 +24,7 @@ import java.util.List;
 public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapter.ViewHolder> {
 
     public static final String TAG = "LocationListAdapter";
+    public static final String COUNTRY_CODE = "country_code";
     private final Context context;
     private final List<Location> locations;
 
@@ -101,7 +102,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
 
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, PlaylistActivity.class);
-                intent.putExtra("country_code", Parcels.wrap(location.getLocation()));
+                intent.putExtra(COUNTRY_CODE, Parcels.wrap(location.getLocation()));
                 context.startActivity(intent);
                 Log.i(TAG, location.getLocation());
             });

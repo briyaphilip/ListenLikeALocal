@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import okhttp3.Headers;
 
 public class PlaylistActivity extends AppCompatActivity {
+    public static final String COUNTRY_CODE = "country_code";
+    public static final String PLAYLIST = "playlist";
     private ActivityPlaylistsBinding binding;
     private ArrayList<Playlist> playlistsList = new ArrayList<>();
     private final ArrayList<String> playlistNameList = new ArrayList<>();
@@ -41,7 +43,7 @@ public class PlaylistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playlists);
 
-        String country_code = Parcels.unwrap(getIntent().getParcelableExtra("country_code"));
+        String country_code = Parcels.unwrap(getIntent().getParcelableExtra(COUNTRY_CODE));
         String limit = "20";
 
         playlists = new SpotifyClient(getApplicationContext());
@@ -79,10 +81,8 @@ public class PlaylistActivity extends AppCompatActivity {
 
         binding.PlaylistListview.setOnItemClickListener((parent, view, position, id) -> {
             String name = playlistNameList.get(position);
-
-            Toast.makeText(this, "Clicked"+name, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, PlaylistDetailActivity.class);
-            intent.putExtra("playlist", Parcels.wrap(p.get(position)));
+            intent.putExtra(PLAYLIST, Parcels.wrap(p.get(position)));
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });

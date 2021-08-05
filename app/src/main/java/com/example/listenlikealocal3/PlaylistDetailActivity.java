@@ -24,6 +24,8 @@ import java.util.ArrayList;
 public class PlaylistDetailActivity extends AppCompatActivity {
 
     public static final String TAG = "PlaylistDetailActivity";
+    public static final String PLAYLIST = "playlist";
+    public static final String ARTIST = "artist";
     private ActivityPlaylistDetailsBinding binding;
     private ArrayList<Song> songsList = new ArrayList<>();
     private ArrayList<Artist> artistList = new ArrayList<>();
@@ -40,7 +42,7 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         binding = DataBindingUtil.setContentView(PlaylistDetailActivity.this, R.layout.activity_playlist_details);
 
-        Playlist playlistObject = (Playlist) Parcels.unwrap(getIntent().getParcelableExtra("playlist"));
+        Playlist playlistObject = (Playlist) Parcels.unwrap(getIntent().getParcelableExtra(PLAYLIST));
 
         SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
         String name = sp.getString("name", null);
@@ -85,10 +87,8 @@ public class PlaylistDetailActivity extends AppCompatActivity {
         binding.SongListview.setAdapter(arrayAdapter);
         binding.SongListview.setOnItemClickListener((parent, view, position, id) -> {
             String name = songNameList.get(position);
-
-            Toast.makeText(this, "Clicked"+name, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, WikiClient.class);
-            intent.putExtra("artist", Parcels.wrap(artistNameList.get(position)));
+            intent.putExtra(ARTIST, Parcels.wrap(artistNameList.get(position)));
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         });

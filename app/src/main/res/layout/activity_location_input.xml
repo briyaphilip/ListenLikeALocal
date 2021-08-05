@@ -9,11 +9,13 @@
 
     <EditText
         android:id="@+id/locationInput"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
+        android:layout_width="392dp"
+        android:layout_height="41dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="213dp"/>
+        tools:layout_editor_absoluteY="213dp"
+        android:hint="Type country code here"/>
 
 
     <TextView
@@ -24,7 +26,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="140dp" />
+        tools:layout_editor_absoluteY="140dp"
+        />
 
     <Button
         android:id="@+id/enterBtn"
