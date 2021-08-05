@@ -27,7 +27,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     private final Context context;
     private final List<Location> locations;
 
-    public LocationListAdapter(Context context, List<Location> locations, List<SpotifyClient> flags) {
+    public LocationListAdapter(Context context, List<Location> locations) {
         this.context = context;
         this.locations = locations;
     }
@@ -88,14 +88,17 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView locationName;
+        TextView flag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             locationName = itemView.findViewById(R.id.locationName);
-
+            flag = itemView.findViewById(R.id.flag);
         }
         public void bind(Location location) {
             locationName.setText(location.getLocation());
+            flag.setText(location.getFlag());
+
             itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, PlaylistActivity.class);
                 intent.putExtra("country_code", Parcels.wrap(location.getLocation()));

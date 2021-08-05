@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.listenlikealocal3.Model.Location;
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -36,6 +37,7 @@ public class LocationInputActivity extends AppCompatActivity {
     Button etButton;
     EditText etlocation;
     String country_code;
+    String flags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +65,12 @@ public class LocationInputActivity extends AppCompatActivity {
     }
 
     private void saveLocation(String locationInput, ParseUser currentUser) {
-        Location location = new Location();
+        Location location = new Location(locationInput, currentUser.toString(), flags);
         location.setLocation(locationInput);
         location.setUser(currentUser);
+        SpotifyClient flags = new SpotifyClient(getApplicationContext());
+        flags.getFlags(locationInput);
+        location.setFlag(flags.toString());
 
         ParseQuery<ParseObject> locationQuery = ParseQuery.getQuery("Location");
         locationQuery.whereEqualTo("Location", locationInput);

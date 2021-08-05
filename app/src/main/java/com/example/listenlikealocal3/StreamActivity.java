@@ -40,7 +40,7 @@ public class StreamActivity extends AppCompatActivity {
         rvLocations = findViewById(R.id.rvLocations);
 
         locationList = new ArrayList<>();
-        adapter = new LocationListAdapter(this, locationList, flagList);
+        adapter = new LocationListAdapter(this, locationList);
 
         queryLocations();
 

@@ -34,8 +34,7 @@ public class WikiClient extends AppCompatActivity {
     TextView artistName;
     TextView artistDetails;
     ImageView artistImage;
-    String URL_TEXT = "https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&formatversion=2&exsentences=10&exlimit=1&explaintext=1&titles=";
-    String URL_IMG = "https://en.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&prop=pageimages|pageterms&piprop=original&titles=";
+    String URL = "https://en.wikipedia.org/w/api.php?action=query&format=json&";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class WikiClient extends AppCompatActivity {
         AsyncHttpClient client = new AsyncHttpClient();
         Log.i(TAG, "log is working");
 
-        client.get(URL_IMG + artistObject, new JsonHttpResponseHandler() {
+        client.get(URL + "formatversion=2&prop=pageimages|pageterms&piprop=original&titles=" + artistObject, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");
@@ -91,7 +90,7 @@ public class WikiClient extends AppCompatActivity {
             }
         });
 
-        client.get(URL_TEXT+artistObject, new JsonHttpResponseHandler() {
+        client.get(URL + "prop=extracts&formatversion=2&exsentences=10&exlimit=1&explaintext=1&titles=" +artistObject, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Headers headers, JSON json) {
                 Log.d(TAG, "onSuccess");

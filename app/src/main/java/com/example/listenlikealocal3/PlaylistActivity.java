@@ -46,10 +46,12 @@ public class PlaylistActivity extends AppCompatActivity {
 
         playlists = new SpotifyClient(getApplicationContext());
         flags = new SpotifyClient(getApplicationContext());
-        flags.getFlags(country_code);
+        //flags.getFlags(country_code);
 
         binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);
-        binding.nameTxtViewName.setText(flags.toString());
+        SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
+        String name = sp.getString("name", null);
+        binding.nameTxtViewName.setText(name);
 
         getPlaylistsForListView(country_code, limit);
 
