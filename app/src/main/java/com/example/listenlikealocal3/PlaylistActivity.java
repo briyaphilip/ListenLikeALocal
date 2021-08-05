@@ -32,6 +32,7 @@ public class PlaylistActivity extends AppCompatActivity {
     private ArrayList<Playlist> playlistsList = new ArrayList<>();
     private final ArrayList<String> playlistNameList = new ArrayList<>();
     private SpotifyClient playlists;
+    private SpotifyClient flags;
 
     private ArrayAdapter arrayAdapter;
 
@@ -43,11 +44,12 @@ public class PlaylistActivity extends AppCompatActivity {
         String country_code = Parcels.unwrap(getIntent().getParcelableExtra("country_code"));
         String limit = "20";
 
-        binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);
-        SharedPreferences sp = this.getSharedPreferences("SPOTIFY", 0);
-        String name = sp.getString("name", null);
-        binding.nameTxtViewName.setText(name);
         playlists = new SpotifyClient(getApplicationContext());
+        flags = new SpotifyClient(getApplicationContext());
+        flags.getFlags(country_code);
+
+        binding = DataBindingUtil.setContentView(PlaylistActivity.this, R.layout.activity_playlists);
+        binding.nameTxtViewName.setText(flags.toString());
 
         getPlaylistsForListView(country_code, limit);
 

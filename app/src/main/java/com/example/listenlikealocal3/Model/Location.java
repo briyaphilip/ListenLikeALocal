@@ -1,5 +1,6 @@
 package com.example.listenlikealocal3.Model;
 
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -30,7 +31,4 @@ public class Location extends ParseObject {
         put(USER, user);
     }
 
-    public String getFlag(String flag){return getFlag(FLAG);}
-
-    public void setFlag(String flag) {put(FLAG, flag);}
 }

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.listenlikealocal3.Model.Location;
+import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -26,7 +27,7 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     private final Context context;
     private final List<Location> locations;
 
-    public LocationListAdapter(Context context, List<Location> locations) {
+    public LocationListAdapter(Context context, List<Location> locations, List<SpotifyClient> flags) {
         this.context = context;
         this.locations = locations;
     }
@@ -87,25 +88,19 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView locationName;
-        TextView flag;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             locationName = itemView.findViewById(R.id.locationName);
-            flag = itemView.findViewById(R.id.flag);
 
         }
         public void bind(Location location) {
             locationName.setText(location.getLocation());
-//            flag.setText(location.getFlag(location.getLocation()));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, PlaylistActivity.class);
-                    intent.putExtra("country_code", Parcels.wrap(location.getLocation()));
-                    context.startActivity(intent);
-                    Log.i(TAG, location.getLocation());
-                }
+            itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(context, PlaylistActivity.class);
+                intent.putExtra("country_code", Parcels.wrap(location.getLocation()));
+                context.startActivity(intent);
+                Log.i(TAG, location.getLocation());
             });
 
         }
