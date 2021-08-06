@@ -1,10 +1,11 @@
 package com.example.listenlikealocal3.Services;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
@@ -14,23 +15,22 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.codepath.asynchttpclient.callback.TextHttpResponseHandler;
 import com.example.listenlikealocal3.Connectors.AsyncHandler;
+import com.example.listenlikealocal3.LocationListAdapter;
 import com.example.listenlikealocal3.Model.Artist;
 import com.example.listenlikealocal3.Model.Location;
 import com.example.listenlikealocal3.Model.Playlist;
 import com.example.listenlikealocal3.Model.Song;
 import com.example.listenlikealocal3.Model.User;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Headers;
@@ -42,7 +42,8 @@ public class SpotifyClient extends AppCompatActivity {
     private final ArrayList<Artist> artists = new ArrayList<>();
     private final SharedPreferences sp;
     private final RequestQueue q;
-    private final ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+    private final ArrayList<Playlist> playlists = new ArrayList<>();
+    List<Location> locations;
     private User user;
 
     public SpotifyClient(Context context) {
@@ -70,17 +71,21 @@ public class SpotifyClient extends AppCompatActivity {
         String endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id +"/tracks?market=US";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, endpoint, null, response -> {
-                    //use either gson or json
-                    Gson gson = new Gson();
+
                     JSONArray jsonArray = response.optJSONArray("items");
                     Log.i(TAG, "ITEMS: " + jsonArray);
                     for (int n = 0; n < jsonArray.length(); n++) {
                         try {
                             JSONObject object = jsonArray.getJSONObject(n);
                             object = object.optJSONObject("track");
-                            JSONObject name = object.optJSONObject("name");
-                            Log.i(TAG, "SONG NAME: " + name);
                             Log.i(TAG, "TRACK: " + object.toString());
+
+                            String songNm = object.getString("name");
+                            Log.i(TAG, "SONG NAME: " + songNm);
+
+                            Song song = new Song(songNm);
+                            song.setName(songNm);
+                            songs.add(song);
 
                             JSONArray album = object.getJSONArray("artists");
                             Log.i(TAG, "LIST: " + album.toString());
@@ -93,11 +98,6 @@ public class SpotifyClient extends AppCompatActivity {
                                 Log.i(TAG,"NAME: " + artistNm.toString());
                             }
 
-                            Song song = gson.fromJson(object.toString(), Song.class);
-                            song.setName(object.toString());
-
-                            Log.i(TAG, "SONG: " + song.getName());
-                            songs.add(song);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -163,7 +163,6 @@ public class SpotifyClient extends AppCompatActivity {
             }
         };
         q.add(jsonObjectRequest);
-        getFlags(country_code);
     }
 
     public void get(final AsyncHandler callBack) {
@@ -186,31 +185,4 @@ public class SpotifyClient extends AppCompatActivity {
         q.add(jsonObjectRequest);
     }
 
-    public void getFlags(String country_code) {
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get("https://gist.githubusercontent.com/DmytroLisitsyn/1c31186e5b66f1d6c52da6b5c70b12ad/raw/01b1af9b267471818f4f8367852bd4a2814cbae6/country_dial_info.json", new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                JSONArray jsonArray = json.jsonArray;
-                for (int i = 0;  i < jsonArray.length(); i++) {
-                    try {
-                        JSONObject object = jsonArray.getJSONObject(i);
-                        if (object.optString("code").equals(country_code)) {
-                            String flag = object.optString("flag");
-                            Log.i(TAG, "FLAG: " + flag);
-                            Location locationFlag = new Location();
-                            locationFlag.setFlag(flag);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            @Override
-            public void onFailure(int statusCode, Headers headers, String response, Throwable throwable) {
-                Log.i(TAG, "onFailure " + throwable);
-            }
-        });
-    }
 }

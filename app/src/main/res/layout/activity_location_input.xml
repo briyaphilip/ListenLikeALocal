@@ -14,8 +14,7 @@
         android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="213dp"
-        android:hint="Type country code here"/>
+        tools:layout_editor_absoluteY="213dp" />
 
 
     <TextView

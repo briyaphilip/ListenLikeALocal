@@ -14,7 +14,8 @@ public class Location extends ParseObject {
 
     public Location() {}
 
-    public Location(String location, String user, String flag) {
+    public Location(String location, String user) {
+        String flag = "";
     }
 
     public String getLocation() {
@@ -31,13 +32,6 @@ public class Location extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(USER, user);
-    }
-
-    public String getFlag() {return getString(FLAG);
-    }
-
-    public void setFlag(String flag) {
-        put(FLAG, flag);
     }
 
 }

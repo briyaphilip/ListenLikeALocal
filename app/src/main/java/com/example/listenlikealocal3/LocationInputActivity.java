@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.codepath.asynchttpclient.AsyncHttpClient;
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 import com.example.listenlikealocal3.Model.Location;
 import com.example.listenlikealocal3.Services.SpotifyClient;
 import com.parse.CountCallback;
@@ -26,9 +28,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.List;
+
+import okhttp3.Headers;
 
 public class LocationInputActivity extends AppCompatActivity {
 
@@ -39,7 +46,6 @@ public class LocationInputActivity extends AppCompatActivity {
     Button etButton;
     EditText etlocation;
     String country_code;
-    String flags;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,7 @@ public class LocationInputActivity extends AppCompatActivity {
                 return;
             }
             ParseUser currentUser = ParseUser.getCurrentUser();
+            Log.i(TAG, "about to call save location");
             saveLocation(locationInput, currentUser);
             Log.i(TAG, "onClick location input");
             country_code = etlocation.getText().toString();
@@ -67,28 +74,22 @@ public class LocationInputActivity extends AppCompatActivity {
     }
 
     private void saveLocation(String locationInput, ParseUser currentUser) {
-        Location location = new Location(locationInput, currentUser.toString(), flags);
+        Location location = new Location(locationInput, currentUser.toString());
         location.setLocation(locationInput);
         location.setUser(currentUser);
-        SpotifyClient spotifyClient = new SpotifyClient(getApplicationContext());
-        String flag = spotifyClient.getFlags(locationInput);
-        Log.i(TAG, "FLAG SAVED: " + flag);
-        location.setFlag(flag);
 
         ParseQuery<ParseObject> locationQuery = ParseQuery.getQuery(LOCATION);
         locationQuery.whereEqualTo(LOCATION, locationInput);
-        locationQuery.countInBackground( new CountCallback() {
-            public void done(int count, ParseException e) {
-                if (e == null) {
-                    if (count == 0) {
-                        addNewLocation(location, locationInput);
-                    }
-                    else {
-                        Log.i(TAG, "Location already exists");
-                    }
-                } else {
-                    Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
+        locationQuery.countInBackground((count, e) -> {
+            if (e == null) {
+                if (count == 0) {
+                    addNewLocation(location, locationInput);
                 }
+                else {
+                    Log.i(TAG, "Location already exists");
+                }
+            } else {
+                Toast.makeText(LocationInputActivity.this, "Error while saving", Toast.LENGTH_SHORT).show();
             }
         });
     }

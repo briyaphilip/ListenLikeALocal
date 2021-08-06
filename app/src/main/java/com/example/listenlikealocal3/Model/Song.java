@@ -3,19 +3,13 @@ package com.example.listenlikealocal3.Model;
 public class Song {
     private String name;
     private String id;
-    private String uri;
 
     public Song(){ }
 
-    public Song(String name, String uri){
+    public Song(String name){
         this.name = name;
-        this.uri = uri;
+        this.id = id;
     }
-//
-//    public Song(String name, String id){
-//        this.name = name;
-//        this.id = id;
-//    }
 
     public String getName() {
         return name;
@@ -31,10 +25,5 @@ public class Song {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUri() {return uri;}
-
-    public void setUri(String songURI) {this.uri = uri;
     }
 }
