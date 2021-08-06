@@ -54,6 +54,7 @@
         android:text="@string/listen_like_a_local"
         android:textStyle="bold"
         android:textSize="30dp"
-        android:layout_marginBottom="100dp"/>
+        android:layout_marginBottom="100dp"
+        android:fontFamily="@font/londrinasolidlight"/>
 
 </RelativeLayout>

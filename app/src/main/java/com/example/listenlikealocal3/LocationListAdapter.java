@@ -34,7 +34,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
     public static final String COUNTRY_CODE = "country_code";
     private final Context context;
     private final List<Location> locations;
-    SpotifyClient spotifyClient;
 
     public LocationListAdapter(Context context, List<Location> locations) {
         this.context = context;
@@ -69,28 +68,21 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
         notifyDataSetChanged();
     }
 
-    public void forceUpdate(){
-        notifyDataSetChanged();
-    }
-
     public void deleteItem(int position) {
         locations.remove(position);
         notifyDataSetChanged();
         deleteQuery(locations.get(position));
     }
 
-    private void deleteQuery(Location locationName) {
+    public void deleteQuery(Location locationName) {
         ParseQuery<Location> query = ParseQuery.getQuery(Location.class);
-        query.findInBackground(new FindCallback<Location>() {
-            @Override
-            public void done(List<Location> locations, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with finding location", e);
-                    return;
-                }
-                locationName.deleteInBackground();
-                Log.i(TAG, "location deleted");
+        query.findInBackground((locations, e) -> {
+            if (e != null) {
+                Log.e(TAG, "Issue with finding location", e);
+                return;
             }
+            locationName.deleteInBackground();
+            Log.i(TAG, "location deleted");
         });
     }
 
@@ -109,7 +101,6 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
             flag = itemView.findViewById(R.id.flag);
         }
         public void bind(Location location) {
-            locationName.setText(location.getLocation());
 
             AsyncHttpClient client = new AsyncHttpClient();
             client.get("https://gist.githubusercontent.com/DmytroLisitsyn/1c31186e5b66f1d6c52da6b5c70b12ad/raw/01b1af9b267471818f4f8367852bd4a2814cbae6/country_dial_info.json", new JsonHttpResponseHandler() {
@@ -123,6 +114,9 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
                                 String flagIcon = object.optString("flag");
                                 Log.i(TAG, "FLAG: " + flagIcon);
                                 flag.setText(flagIcon);
+                                String country_name = object.optString("name");
+                                Log.i(TAG, "COUNTRY: " + country_name);
+                                locationName.setText(country_name);
                             }
 
                         } catch (JSONException e) {
