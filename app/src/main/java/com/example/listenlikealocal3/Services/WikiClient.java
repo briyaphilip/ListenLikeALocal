@@ -75,7 +75,7 @@ public class WikiClient extends AppCompatActivity {
                         Log.i(TAG, "IMG URL: " + imgUrl);
                         Glide.with(WikiClient.this)
                                 .load(imgUrl)
-                                .override(400, 600)
+                                .override(600, 800)
                                 .apply(RequestOptions.bitmapTransform(new RoundedCorners(14)))
                                 .into(artistImage);
                     }

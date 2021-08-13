@@ -28,7 +28,6 @@ public class StreamActivity extends AppCompatActivity {
     private RecyclerView rvLocations;
     protected LocationListAdapter adapter;
     protected List<Location> locationList;
-    protected List<SpotifyClient> flagList;
 
     private SwipeRefreshLayout swipeContainer;
 

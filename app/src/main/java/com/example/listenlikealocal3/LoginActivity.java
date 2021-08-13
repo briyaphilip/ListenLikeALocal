@@ -30,22 +30,22 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         Button btnLogin = findViewById(R.id.btnLogin);
-        Button btnSignUp = findViewById(R.id.btnSignUp);
+        //Button btnSignUp = findViewById(R.id.btnSignUp);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             goFeedActivity();
         }
 
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(TAG, "onClick sign up button");
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
-                signUpUser(username, password);
-            }
-        });
+//        btnSignUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(TAG, "onClick sign up button");
+//                String username = etUsername.getText().toString();
+//                String password = etPassword.getText().toString();
+//                signUpUser(username, password);
+//            }
+//        });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
