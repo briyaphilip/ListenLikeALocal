@@ -8,18 +8,9 @@
 
 ## Overview
 ### Description
-Listen Like a Local is an app that will use the Spotify API and the Last.fm API to create playlists based on the top artists in the country you're traveling to.
+Listen Like a Local is an app that will use the Spotify API and the MediaWiki API to allow users to discover music and learn about the top artists for any country in the world.
 
 <img src='https://media.giphy.com/media/WPkAe4OEtaJG87eFRO/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-### App Evaluation
-[Evaluation of your app across the following attributes]
-- **Category: music, travel
-- **Mobile: Mobile (first) and desktop experience
-- **Story: This app will create playlists based on what is most popular in the area, giving the user a taste of what the locals listen to. Users will also be able to explore artists in that location most similar to songs/artists they already listen to.
-- **Market: Anyone who likes to discover new music and immerse themselves into new cultures through music.
-- **Habit: Users can continuously use this app to find new music whenever they are traveling. It will give the user endless recommendations, making it habit forming. 
-- **Scope: App will begin as a way for travelers to find local music. App can expand to sharing music between locals and travelers in order to create a cross-cultural exchange.
 
 ## Product Spec
 
@@ -30,15 +21,13 @@ Listen Like a Local is an app that will use the Spotify API and the Last.fm API 
 * User can explore and Spotify playlists after entering in the country code
 * User can save Spotify playlists 
 * User explore artist info
-* Profile page where user can see location history and saved playlists
-
 
 **Optional Nice-to-have Stories**
 
 * User can view travel history on a map
 * User can hear song when clicked
 * User can explore information about the music in that country 
-* User can filter playlists by mood/danceability
+* Profile page where user can see location history and saved playlistsUser can filter playlists by mood/danceability
 
 ### 2. Screen Archetypes
 
