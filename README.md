@@ -10,7 +10,7 @@
 ### Description
 Listen Like a Local is an app that will use the Spotify API and the Last.fm API to create playlists based on the top artists in the country you're traveling to.
 
-https://media.giphy.com/media/WPkAe4OEtaJG87eFRO/giphy.gif?cid=790b7611f4bb6a4d1d007add9613c33a39a9df22b4c25da1&rid=giphy.gif&ct=g
+<img src='https://media.giphy.com/media/WPkAe4OEtaJG87eFRO/giphy.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 ### App Evaluation
 [Evaluation of your app across the following attributes]
