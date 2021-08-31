@@ -10,6 +10,8 @@
 ### Description
 Listen Like a Local is an app that will use the Spotify API and the Last.fm API to create playlists based on the top artists in the country you're traveling to.
 
+https://media.giphy.com/media/WPkAe4OEtaJG87eFRO/giphy.gif?cid=790b7611f4bb6a4d1d007add9613c33a39a9df22b4c25da1&rid=giphy.gif&ct=g
+
 ### App Evaluation
 [Evaluation of your app across the following attributes]
 - **Category: music, travel
@@ -52,33 +54,6 @@ Listen Like a Local is an app that will use the Spotify API and the Last.fm API 
    * info from Wiki api
 * Playlist View
    * user can now see playlists and can listen to the playlist
-  
-
-### 3. Navigation
-
-**Tab Navigation** (Tab to Screen)
-
-* Home
-* Playlists/Locations
-    * new playlist
-* [fill out your third tab]
-
-**Flow Navigation** (Screen to Screen)
-
-* [list first screen here]
-   * [list screen navigation here]
-   * ...
-* [list second screen here]
-   * [list screen navigation here]
-   * ...
-
-## Wireframes
-[Add picture of your hand sketched wireframes in this section]
-<img src="YOUR_WIREFRAME_IMAGE_URL" width=600>
-
-### [BONUS] Digital Wireframes & Mockups
-
-### [BONUS] Interactive Prototype
 
 ## Schema 
 [This section will be completed in Unit 9]
@@ -133,4 +108,4 @@ Artist Detail Model
 **Playlist Detail**
 * (READ/GET) Query artist image from Spotify API endpoint 
 * (READ/GET) Query artist name from Spotify API endpoint 
-* (READ/GET) Query artist description from TBD API endpoint 
+* (READ/GET) Query artist description from MediaWiki API endpoint 
