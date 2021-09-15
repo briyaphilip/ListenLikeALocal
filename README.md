@@ -20,7 +20,7 @@ Listen Like a Local is an app that will use the Spotify API and the MediaWiki AP
 
 * User can explore and Spotify playlists after entering in the country code
 * User can save Spotify playlists 
-* User explore artist info
+* User can explore artist info
 
 **Optional Nice-to-have Stories**
 
